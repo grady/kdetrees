@@ -1,0 +1,8 @@
+S3method(hist,kdetrees)
+S3method(plot,kdetrees)
+export(dissmap)
+export(dist.diss)
+export(kdetrees)
+import(ape)
+import(ggplot2)
+import(phangorn)

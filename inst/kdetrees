@@ -1,0 +1,53 @@
+#! /usr/bin/env Rscript
+suppressWarnings({
+  require(optparse,quietly=TRUE)
+  require(kdetrees,quietly=TRUE)
+  require(ape,quietly=TRUE)
+  require(ggplot2,quietly=TRUE)})
+
+## option parsing
+option.list <- list(make_option(c("-b","--use-branch-lengths"),"store_true",default=FALSE,dest="use.blen"),
+                    make_option(c("-n","--num-outliers"),type="integer",dest="n",metavar="NUM"),
+                    make_option(c("-o","--output-prefix"),dest="prefix",default="",metavar="PREFIX"))
+parser <- OptionParser(option_list=option.list, usage="%prog [options] file [...]")
+arg <- parse_args(parser,positional_arguments=TRUE)
+
+## read tree files from positional arguments
+trees <- lapply(arg$args,read.tree,keep.multi=TRUE)
+for(i in seq_along(trees)){
+  n <- if(length(trees[[i]])==1) basename(arg$args[i]) else paste(basename(arg$args[i]),seq_along(trees[[i]]))
+  names(trees[[i]]) <- n
+}
+trees <- unlist(trees,FALSE)
+class(trees) <- "multiPhylo"
+
+## call kdetrees
+res <- {
+  if(is.null(arg$options$n))
+    kdetrees(trees,use.blen=arg$options$use.blen)
+  else
+    kdetrees(trees,arg$options$n,use.blen=arg$options$use.blen)}
+
+##write result output & create plots
+cat("Writing outlier newick strings to ",arg$options$prefix,"outliers.tre.\n",sep="")
+write.tree(trees[res$outliers],file=paste(arg$options$prefix,"outliers.tre",sep=""))
+
+cat("Drawing diagnostic plots.\n")
+pdf(paste(arg$options$prefix,"scatterplot.pdf",sep=""))
+plot(res)
+invisible(dev.off())
+pdf(paste(arg$options$prefix,"histogram.pdf",sep=""))
+hist(res)
+invisible(dev.off())
+
+cat("Drawing outlier trees to ",arg$options$prefix,"outliers.pdf.\n",sep="")
+pdf(paste(arg$options$prefix,"outliers.pdf",sep=""))
+for(i in seq_along(res$outliers)){
+  plot(trees[[res$outliers[i]]],type="u")
+  add.scale.bar()
+  title(names(trees)[res$outliers[i]],paste("Score:",res$density[res$outliers[i]]))
+}
+invisible(dev.off())
+
+cat("Writing ",arg$options$prefix,"results.csv\n",sep="")
+write.csv(data.frame(score=res$density,string=write.tree(trees)),file=paste(arg$options$prefix,"results.csv",sep=""))

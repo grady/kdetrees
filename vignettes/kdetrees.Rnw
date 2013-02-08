@@ -1,0 +1,166 @@
+\documentclass{article}
+%\VignetteIndexEntry{Using KDETrees}
+\title{Using KDETrees}
+\author{Grady Weyenberg}
+
+<<preamble,echo=FALSE,results=hide>>=
+ops <- options(width=60)
+library(kdetrees)
+@ 
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\label{sec:introduction}
+
+KDETrees is a tool for finding discordant phylogenetic trees. It takes as input an {\tt ape::multiPhylo} object, which contains a set of trees, and produces a score for each tree. High scores mean the tree is relatively similar to other trees in the sample, while low scores indicate that the tree in question may be discordant with the others. If desired, a number of low scoring trees may be designated as ``outliers'', which removes their contribution from the calculation. By default the lowest scoring 5\% of the sample is removed.
+
+\section{Basic Use}
+\label{sec:use}
+
+\subsection{Importing Trees}
+\label{sec:importing-trees}
+
+Trees may be imported using any of the methods provided by {\tt
+  ape}. See {\tt ?read.tree} and {\tt ?read.nexus} for examples. To
+import the {\tt apicomplexa} dataset, for example, I placed the Newick
+tree stringsinto the {\tt apicompexa.tre} file and used the following command:
+<<eval=FALSE>>=
+apicomplexa <- read.tree("apicomplexa.tre")
+@ 
+
+\subsection{Running kdetrees}
+\label{sec:running-kdetrees}
+
+The simplest way to run {\tt kdetrees} is to call the function of the
+same name, with the list of trees as the first argument.
+<<>>=
+result <- kdetrees(apicomplexa)
+@ 
+By default branch lengths are ignored, if you would like to use the
+branch length information in the calculation, set the {\tt use.blen}
+option to true.
+<<>>=
+result <- kdetrees(apicomplexa,use.blen=TRUE)
+@ 
+Another important option is the number of ``outlier'' trees which should be
+removed from the calculation. This is controlled by the {\tt n} parameter.
+<<>>=
+result <- kdetrees(apicomplexa,n=12,use.blen=TRUE)
+@ 
+\begin{figure}
+  \centering
+<<fig=TRUE,height=4>>=
+plot(result)
+@ 
+<<fig=TRUE,height=4>>=
+hist(result)
+@   
+  \caption{Diagnostic plots can be created with {\tt plot} and {\tt
+      hist}. These methods use {\tt ggplot2}, instead of base graphics.}
+  \label{fig:diagplots}
+\end{figure}
+
+It should be noted that the {\tt plot} and {\tt hist} methods use the
+{\tt ggplot2} package, not base graphics. Thus, you can modify them as
+you see fit. For example,
+\begin{center}
+<<fig=TRUE,height=4>>=
+library(ggplot2)
+plot(result) + theme(panel.background=element_blank())
+@ 
+\end{center}
+
+\subsection{Results}
+\label{sec:results}
+
+The result object is a list with three components.
+<<>>=
+str(result,strict.width="wrap")
+@ 
+The first element, {\tt density}, has the computed score for each tree
+in the input list. This is the variable displayed in the diagnostic
+plots. The second element {\tt outliers} contains the
+indices of the low scoring trees which were not included in the
+calculations. We can use this to extract the outlier trees from the
+input list.
+<<>>=
+outlier.trees <- apicomplexa[result$outliers]
+@ 
+One might then wish to look at a plot of the putative outlier
+trees. Here I plot the lowest scoring tree in the apicomplexa
+dataset. It appears that something bad happened during the
+reconstruction of this tree, causing one branch to be much longer
+than the others.
+\begin{center}
+<<fig=TRUE,height=4>>=
+plot(outlier.trees[[1]],"u",no.margin=TRUE)
+@   
+\end{center}
+If you would like to export the outlier trees to a file, you may do
+something like the following.
+<<eval=FALSE>>=
+write.tree(outlier.trees,file="outliers.tre")
+@ 
+
+\section{Shell Script}
+\label{sec:shell-script}
+
+The KDETrees package also comes with a bash shell script that calls
+{\tt kdetrees} using the Rscript executable. This is a convenience
+wrapper for cli users. If you copy this script to a working directory
+you can run it as follows.
+\begin{Soutput}
+$ ./kdetrees -h
+Usage: ./kdetrees [options] file [...]
+Options:
+	-b, --use-branch-lengths
+	-n NUM-OUTLIERS, --num-outliers=NUM-OUTLIERS
+	-o OUTPUT-PREFIX, --output-prefix=OUTPUT-PREFIX
+	-h, --help, Show this help message and exit
+\end{Soutput}
+This script will read any trees in the file[s] provided as positional
+arguments, run kdetrees on them using the options provided, and write
+several output files to the current directory. The {\tt outliers.tre}
+file will contain newick strings of the outlier trees, these trees are
+also rendered in the {\tt outliers.pdf} file. The scatterplot
+and histogram pdf filess contain the result of calling {\tt plot} and {\tt
+  hist}, respectively, and the {\tt results.csv} file contains the
+name, Newick string, and computed score for each tree found.
+
+The final element of the result list {\tt bandwidth} contains the
+bandwidths calculated by the nearest-neighbor algorithm. This is
+discussed further in the next section.
+
+\section{Advanced Options}
+\label{sec:advanced-options}
+Currently, kdetrees uses an adaptive bandwidth method based on a
+nearest-neighbor calculation by default. It is possible to control the
+number of trees used to define the neighborhood, or disable the
+adaptive method entirely and provide a constant bandwidth, using the
+{\tt bw} parameter. If {\tt bw} is passed as a list, the list is used
+as a set of parameters for a call to {\tt bw.nn}. For example, to
+change the neighborhood to include 50\% of the sample, instead of the
+default 20\%, we would do the following.
+<<eval=FALSE>>=
+kdetrees(apicomplexa,n=12,bw=list(prop=0.5),use.blen=TRUE)
+@ 
+If we wanted to set a constant bandwidth, we simply pass it directly
+to {\tt bw}.
+<<eval=FALSE>>=
+kdetrees(apicomplexa,n=12,bw=6,use.blen=TRUE)
+@ 
+
+The {\tt kdetrees} function is a fairly simple wrapper of a few
+component functions.
+<<>>=
+kdetrees
+@ 
+Additional control over the method can be achieved by calling the {\tt
+  dist.diss}, {\tt normkern}, and {\tt estimate} functions separately,
+although this is not recommended unless you know what you are doing.
+
+\end{document}
+<<postamble,echo=FALSE,results=hide>>=
+options(ops)
+@ 

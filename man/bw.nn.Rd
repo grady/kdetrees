@@ -1,0 +1,25 @@
+\name{bw.nn}
+\alias{bw.nn}
+\title{nearest-neighbor adaptive bandwidth selection}
+\usage{
+  bw.nn(x, prop = 0.2, tol = 1e-06)
+}
+\arguments{
+  \item{x}{pairwise distance matrix}
+
+  \item{prop}{fraction of data to define the local
+  neighborhood}
+
+  \item{tol}{tolerance for zero-bandwidth check}
+}
+\value{
+  a vector of bandwidths for each tree (row) in x
+}
+\description{
+  For each row in pairwise distance matrix find the
+  distance to the closest prop fraction of trees.
+}
+\author{
+  Grady Weyenberg
+}
+
