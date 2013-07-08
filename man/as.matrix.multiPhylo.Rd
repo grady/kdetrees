@@ -1,12 +1,12 @@
-\name{dissmap}
-\alias{dissmap}
+\name{as.matrix.multiPhylo}
+\alias{as.matrix.multiPhylo}
 \title{dissimilarity map tree vectorization}
 \usage{
-  dissmap(x, use.blen = FALSE, unroot = TRUE, ...)
+  \method{as.matrix}{multiPhylo} (x, use.blen = FALSE,
+    unroot = TRUE, ...)
 }
 \arguments{
-  \item{x}{an ape::multiPhylo object. All trees must have
-  identical tip names.}
+  \item{x}{an ape::multiPhylo object.}
 
   \item{use.blen}{use branch length information in the
   calculation?}

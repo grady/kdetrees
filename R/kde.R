@@ -4,102 +4,89 @@
 ##' bandwidth. It can also be a vector, in which case it will be used
 ##' as variable bandwidths. Finally, if it is a list, the list will be
 ##' passed as arguments to the bw.nn adaptive bandwith function.
+##'
+##' ... Is passed to either \code{distory::dist.multiPhylo} or
+##' \code{dist.diss}, as appropriate. See the help for these functions
+##' for more details.
 ##' 
 ##' @param trees multiPhylo object
-##' @param n number of outliers to report
+##' @param k IQR multiplier for outlier detection
+##' @param distance Select "geodesic" or "dissimilarity" distance
+##' calculation method
 ##' @param bw see Details
-##' @param ... additional arguments for dist.diss
-##' @return a kdetrees object; list(density,outliers,bandwidth)
+##' @param greedy greedy outlier detection?
+##' @param ... additional arguments for distance calculation function, see details
+##' @return a kdetrees object; list(density,outliers)
 ##' @author Grady Weyenberg
 ##' @export
-kdetrees <- function(trees,n=ceiling(0.05*length(trees)),bw=list(),...){
-  dm <- dist.diss(trees,...)
+##' @examples
+##' kdeobj <- kdetrees(apicomplexa)
+##' print(kdeobj)
+##' kdeobj$outliers
+##'
+##' kdetrees(apicomplexa, k=2.0, distance="dissimilarity",use.blen=TRUE)
+kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),bw=list(),greedy=FALSE,...){
+  distance <- match.arg(distance)
+  dm <- switch(distance, geodesic = as.matrix(dist.multiPhylo(trees,...)),
+               dissimilarity = as.matrix(dist.diss(trees,...)))
+  dimnames(dm) <- list(names(trees),names(trees))
+
+  cutoff <- function(x, c = 1.5){
+    qs <- quantile(x, c(0.25,0.75))
+    unname(diff(qs) * -c + qs[1])
+  }
+  
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
   km <- normkern(dm,bw)
-  i <- which.min(estimate(km))
-  while(length(i) < n){
-    j <- which.min(estimate(km[-i,-i]))
-    j[1] <- match(names(j),rownames(km))
-    i <- c(i,j)
+  x <- estimate(km)
+  c <- cutoff(x, k)
+  i <- which( x < c )
+  if (greedy) {
+    while(TRUE){
+      i <- which( x < c )
+      if (length(i) < 1) break
+      x <- estimate(km,i)
+      c2 <- cutoff(x[-i], k)
+      if(is.na(c2)) browser()
+      if(c2 > c) c <- c2 else break
+    }
   }
-  est <- estimate(km,i)
-  out <- list(density=est,outliers=i,bandwidth=bw)
-  class(out) <- "kdetrees"
-  out
+  structure(list(density=x, i=i, outliers=trees[i]), class="kdetrees",
+            call=match.call(), c=c)
 }
-
-##' Plot the unnormalized density estimates for each tree.
-##'
-##' If ggplot2 graphics are used, ... is a sequence of additional
-##' ggplot2 directives to be added to the end of the ggplot
-##' construction. If base graphics are used, ... are additional
-##' arguments passed to plot command.
-##' @param x kdetrees object to be plotted
-##' @param ... see details
-##' @param ggplot Logical: ggplot2 or base graphics
-##' @return either a ggplot object or NULL
+##' do complete analysis in one call
+##' @param file newick file with trees
+##' @param outgroup if a character, reroot all trees with this species as outgroup
+##' @param ... additional parameters for kdetrees
+##' @param tree.file write outlier trees in newick format to this file
+##' @param csv.file write density results to this file
+##' @param plot.file print scatterplot of results to this file
+##' @param hist.file print histogram of density estimates to this file
+##' @return results of kdetrees call
 ##' @author Grady Weyenberg
 ##' @export
-##' @method plot kdetrees
-##' @examples
-##' fit <- kdetrees(apicomplexa,12,use.blen=TRUE)
-##' plot(fit)
-plot.kdetrees <- function(x,...,ggplot=("ggplot2" %in% installed.packages())){
-  df <- with(x,data.frame(density=unname(density),
-                          tree=names(density),
-                          index=seq_along(density),
-                          outlier=seq_along(density)%in%outliers))
-  ylab <- "Non-normalized Density"
-  xlab <- "Tree Index"
-  main <- paste(length(x$outliers),"Outliers Removed")
+kdetrees.complete <- function(file, outgroup=NULL,...,tree.file="outliers.tre",
+                              csv.file="results.csv",plot.file="plot.png",
+                              hist.file="hist.png"){
+  trees <- read.tree(file)
+  if (is.null(names(trees))) names(trees) <- paste("tree",seq_along(trees),sep="")
+  if (!inherits(trees,"multiPhylo")) stop("Could not read tree file")
+  if (is.character(outgroup)) {
+    trees <- lapply(trees,root,outgroup,resolve.root=TRUE)
+    trees <- lapply(trees,"[<-","node.label", NULL)
+    class(trees) <- "multiPhylo"
+  }
   
-  if(ggplot)
-    ggreduce(ggplot(df,aes(index,density,color=outlier)),
-             geom_point(), labs(title=main, x=xlab,y=ylab),
-             theme(legend.position="top"),...)
-  else
-    plot(density~index,data=df,pch=as.numeric(outlier)+1L,ylab=ylab,xlab=xlab,main=main)
+  res <- kdetrees(trees,...)
+  browser()
+  if (is.character(plot.file)) ggsave(plot.file,plot(res))
+  if (is.character(hist.file)) ggsave(hist.file,hist(res))
+  if (is.character(csv.file)) write.csv(as.data.frame(res),csv.file)
+  if (is.character(tree.file) && length(res$outliers) > 0)
+    write.tree(res$outliers, tree.file, tree.names=TRUE,digits=5)
+
+  res
 }
-
-
-##' Create a histogram of tree density estimates
-##' 
-##' If ggplot2 graphics are used, ... is a sequence of additional
-##' ggplot2 directives to be added to the end of the ggplot
-##' construction. If base graphics are used, ... are additional
-##' arguments passed to plot command.
-##' @param x kdetrees object to plot
-##' @param ... see details
-##' @param ggplot Logical: ggplot2 or base graphics
-##' @return either a ggplot or histogram object
-##' @author Grady Weyenberg
-##' @export
-##' @method hist kdetrees
-##' @examples
-##' fit <- kdetrees(apicomplexa,12,use.blen=TRUE)
-##' plot(fit)
-hist.kdetrees <- function(x,...,ggplot=("ggplot2" %in% installed.packages())){
-  df <- with(x,data.frame(density=unname(density),
-                          tree=names(density),
-                          index=seq_along(density),
-                          outlier=seq_along(density)%in%outliers))
-  bw <- with(x,diff(range(density))/nclass.FD(density))
-  main <- paste("Histogram of Estimates:",length(x$outliers),"Outliers Removed")
-  xlab <- "Non-normalized Density"
-  ylab <- "Count"
-
-  if(ggplot)
-    ggreduce(ggplot(df,aes(density,fill=outlier)),
-             geom_histogram(binwidth=bw), labs(title=main,x=xlab,y=ylab),
-             theme(legend.position="top"),...)
-  else
-    hist(df$density,main=main,xlab=xlab,ylab=ylab)
-}
-  
-
-##' Makes ggplot work more like usual R. Uses ',' instead of '+'.
-##' @param ... sequence of ggplot2 commands 
-ggreduce <- function(...) eval.parent(substitute(Reduce("+",list(...))))
 
 ##' estimate densities from kernel matrix
 ##'
@@ -113,5 +100,6 @@ estimate <- function(x,i=integer()){
   else
     rowSums(x) - diag(x)
 }
+
 
 

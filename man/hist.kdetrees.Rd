@@ -2,28 +2,22 @@
 \alias{hist.kdetrees}
 \title{Create a histogram of tree density estimates}
 \usage{
-  \method{hist}{kdetrees} (x, ...,
-    ggplot = ("ggplot2" \%in\% installed.packages()))
+  \method{hist}{kdetrees} (x, ...)
 }
 \arguments{
   \item{x}{kdetrees object to plot}
 
-  \item{...}{see details}
-
-  \item{ggplot}{Logical: ggplot2 or base graphics}
+  \item{...}{additional arguments passed to ggplot}
 }
 \value{
-  either a ggplot or histogram object
+  a ggplot object
 }
 \description{
-  If ggplot2 graphics are used, ... is a sequence of
-  additional ggplot2 directives to be added to the end of
-  the ggplot construction. If base graphics are used, ...
-  are additional arguments passed to plot command.
+  Create a histogram of tree density estimates
 }
 \examples{
-fit <- kdetrees(apicomplexa,12,use.blen=TRUE)
-plot(fit)
+fit <- kdetrees(apicomplexa)
+hist(fit)
 }
 \author{
   Grady Weyenberg

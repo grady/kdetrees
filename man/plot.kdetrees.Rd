@@ -2,27 +2,21 @@
 \alias{plot.kdetrees}
 \title{Plot the unnormalized density estimates for each tree.}
 \usage{
-  \method{plot}{kdetrees} (x, ...,
-    ggplot = ("ggplot2" \%in\% installed.packages()))
+  \method{plot}{kdetrees} (x, ...)
 }
 \arguments{
   \item{x}{kdetrees object to be plotted}
 
-  \item{...}{see details}
-
-  \item{ggplot}{Logical: ggplot2 or base graphics}
+  \item{...}{additional arguments passed to ggplot}
 }
 \value{
-  either a ggplot object or NULL
+  a ggplot object
 }
 \description{
-  If ggplot2 graphics are used, ... is a sequence of
-  additional ggplot2 directives to be added to the end of
-  the ggplot construction. If base graphics are used, ...
-  are additional arguments passed to plot command.
+  Plot the unnormalized density estimates for each tree.
 }
 \examples{
-fit <- kdetrees(apicomplexa,12,use.blen=TRUE)
+fit <- kdetrees(apicomplexa)
 plot(fit)
 }
 \author{

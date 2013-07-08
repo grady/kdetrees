@@ -8,14 +8,15 @@
   \item{x}{either a row matrix of tree vectors, or a
   multiPhylo object}
 
-  \item{...}{additional arguments passed to dissmap}
+  \item{...}{additional arguments passed to
+  as.matrix.multiPhylo}
 
   \item{method}{option passed to dist}
 
   \item{p}{option passed to dist}
 }
 \value{
-  a matrix of pairwise tree distances
+  a dist object with tree-to-tree distances
 }
 \description{
   pairwise tree distances
