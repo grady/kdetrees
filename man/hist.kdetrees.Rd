@@ -16,8 +16,8 @@
   Create a histogram of tree density estimates
 }
 \examples{
-fit <- kdetrees(apicomplexa)
-hist(fit)
+result <- kdetrees(apicomplexa)
+hist(result)
 }
 \author{
   Grady Weyenberg

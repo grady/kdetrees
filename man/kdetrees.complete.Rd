@@ -1,16 +1,13 @@
 \name{kdetrees.complete}
 \alias{kdetrees.complete}
-\title{do complete analysis in one call}
+\title{Complete kdetrees analysis convenience function}
 \usage{
-  kdetrees.complete(file, outgroup = NULL, ...,
-    tree.file = "outliers.tre", csv.file = "results.csv",
-    plot.file = "plot.png", hist.file = "hist.png")
+  kdetrees.complete(file, ..., tree.file = "outliers.tre",
+    csv.file = "results.csv", plot.file = "plot.png",
+    hist.file = "hist.png")
 }
 \arguments{
   \item{file}{newick file with trees}
-
-  \item{outgroup}{if a character, reroot all trees with
-  this species as outgroup}
 
   \item{...}{additional parameters for kdetrees}
 
@@ -26,10 +23,13 @@
   this file}
 }
 \value{
-  results of kdetrees call
+  result of kdetrees call
 }
 \description{
-  do complete analysis in one call
+  Performs a complete kdetrees analysis, starting with
+  reading trees from a newick file on disk, and writing
+  result files to the working directory. Names and location
+  of output files may be controlled by optional arguments.
 }
 \author{
   Grady Weyenberg

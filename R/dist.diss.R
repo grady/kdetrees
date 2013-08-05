@@ -6,20 +6,20 @@
 ##' topology.
 ##' 
 ##' @param x an ape::multiPhylo object.
-##' @param use.blen use branch length information in the calculation?
-##' @param unroot unroot trees first?
-##' @param ... additional options for \code{dist}
+##' @param ... additional options for \code{ape::cophenetic.phylo}
 ##' @return a row matrix of tree vectors
 ##' @author Grady Weyenberg
 ##' @method as.matrix multiPhylo
 ##' @export
-as.matrix.multiPhylo <- function(x,use.blen=FALSE,unroot=TRUE,...){
+##' @examples
+##' as.matrix(apicomplexa[1:5])
+as.matrix.multiPhylo <- function(x,...){
   tip.labels <- unique(unlist(lapply(x,"[[","tip.label")))
 
   ##Unroot the trees (is there any reason not to do this?)
-  if(unroot){ x <- lapply(x,unroot) }
+  ##if(unroot){ x <- lapply(x,unroot) }
   ##Set branch lengths to 1
-  if(!use.blen){ x <- lapply(x, compute.brlen, method = 1) }
+  #if(!use.blen){ x <- lapply(x, compute.brlen, method = 1) }
   ##find tip-tip distances for a tree, if tips are missing, add NA
   tip2tip <- function(y){
     missing.tips <- setdiff(tip.labels,y$tip.label)
@@ -36,7 +36,9 @@ as.matrix.multiPhylo <- function(x,use.blen=FALSE,unroot=TRUE,...){
   out
 }
 
-##' pairwise tree distances
+##' Compute pairwise tree distances
+##'
+##' 
 ##'
 ##' @param x either a row matrix of tree vectors, or a multiPhylo object
 ##' @param ... additional arguments passed to as.matrix.multiPhylo
@@ -46,6 +48,8 @@ as.matrix.multiPhylo <- function(x,use.blen=FALSE,unroot=TRUE,...){
 ##' @return a dist object with tree-to-tree distances
 ##' @author Grady Weyenberg
 ##' @export
+##' @examples
+##' dist.diss(apicomplexa[1:5])
 dist.diss <- function(x,...,method="euclidean",p=2){
   ##pairwise tree distances
   if(inherits(x,"multiPhylo")) d <- as.matrix.multiPhylo(x,...)

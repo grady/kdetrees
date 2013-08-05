@@ -13,4 +13,6 @@ NULL
 ##' @name apicomplexa
 ##' @docType data
 ##' @format a multiPhylo object with 268 phylogenetic trees
+##' @examples
+##' kdetrees(apicomplexa)
 NULL

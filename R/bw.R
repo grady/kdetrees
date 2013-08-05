@@ -7,6 +7,10 @@
 ##' @param tol tolerance for zero-bandwidth check
 ##' @return a vector of bandwidths for each tree (row) in x
 ##' @author Grady Weyenberg
+##' @export
+##' @examples
+##' dm <- as.matrix(dist.diss(apicomplexa[1:20]))
+##' bw.nn(dm)
 bw.nn <- function(x,prop=0.2,tol=1e-6){
   out <- apply(x,1,function(y) quantile(y,prop))
   is.zero <- out < tol

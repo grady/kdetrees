@@ -6,5 +6,8 @@
 \description{
   Apicomplexa gene trees sample data set.
 }
+\examples{
+kdetrees(apicomplexa)
+}
 \keyword{datasets}
 

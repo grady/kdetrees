@@ -1,0 +1,17 @@
+Notes from Jul 11 Meeting at PPB.
+
+Redo the HUMAN faked data with removal of Et. Does it work then?
+
+BIG SIMULATION 50/10k
+
+Good RoC curve. Redo with different incidence of outliers in population.
+
+Redo paper figure with 
+
+
+Edit new message in paper. pMCOA is slow, ours is fast but slightly less accurate
+
+
+endo-endo-endosymbiote stuff? paper from pat
+
+different evolutionary rates for coalescent trees

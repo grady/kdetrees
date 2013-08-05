@@ -1,9 +1,9 @@
-##' Summarize a kdetrees object
+##' Summarize a kdetrees object in human-readable form.
 ##'
 ##' Pretty-prints the results of a kdetrees ananlysis to console.
 ##'
 ##' @param x object to be printed
-##' @param ... unused
+##' @param ... unused, required for generic compatability
 ##' @return invisible(x)
 ##' @author Grady Weyenberg
 ##' @method print kdetrees
@@ -15,7 +15,8 @@ print.kdetrees <- function(x,...){
   cat("Density estimates:\n")
   print(summary(x$density))
   cat("Cutoff: ",attr(x,"c"),"\n")
-  cat("\nOutliers detected:\n",outliers,"\n")
+  cat("\nOutliers detected:\n")
+  print(outliers,quote=FALSE)
   invisible(x)
 }
 
@@ -36,6 +37,9 @@ print.kdetrees <- function(x,...){
 ##' @author Grady Weyenberg
 ##' @method as.data.frame kdetrees
 ##' @export
+##' @examples
+##' result <- kdetrees(apicomplexa)
+##' as.data.frame(result)
 as.data.frame.kdetrees <- function(x, row.names, optional, trees=NULL, ...){
     out <- data.frame(density = x$density,
                       outlier=names(x$density) %in% names(x$outliers),
@@ -53,8 +57,8 @@ as.data.frame.kdetrees <- function(x, row.names, optional, trees=NULL, ...){
 ##' @export
 ##' @method plot kdetrees
 ##' @examples
-##' fit <- kdetrees(apicomplexa)
-##' plot(fit)
+##' result <- kdetrees(apicomplexa)
+##' plot(result)
 plot.kdetrees <- function(x,...){
   df <- with(x,data.frame(density=unname(density),
                           index=seq_along(density),
@@ -77,8 +81,8 @@ plot.kdetrees <- function(x,...){
 ##' @export
 ##' @method hist kdetrees
 ##' @examples
-##' fit <- kdetrees(apicomplexa)
-##' hist(fit)
+##' result <- kdetrees(apicomplexa)
+##' hist(result)
 hist.kdetrees <- function(x,...){
   df <- with(x,data.frame(density=unname(density),
                           index=seq_along(density),
@@ -95,3 +99,4 @@ hist.kdetrees <- function(x,...){
 
 ## Suppress the NOTES from R CMD check about undefined variables (ggplot calls)
 globalVariables(c("outlier","index"))
+

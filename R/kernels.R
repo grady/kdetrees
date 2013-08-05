@@ -18,7 +18,6 @@
 ##' @param delta shape parameter for kernel
 ##' @return an object of the same type as x with the kernel evaluations
 ##' @author Grady Weyenberg
-##' @export 
 normkern <- function(x, bw=1.0, delta=2L)
   exp(-abs(x/bw)^delta) / bw
 

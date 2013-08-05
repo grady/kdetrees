@@ -19,6 +19,10 @@
   For each row in pairwise distance matrix find the
   distance to the closest prop fraction of trees.
 }
+\examples{
+dm <- as.matrix(dist.diss(apicomplexa[1:20]))
+bw.nn(dm)
+}
 \author{
   Grady Weyenberg
 }

@@ -21,6 +21,9 @@
 \description{
   pairwise tree distances
 }
+\examples{
+dist.diss(apicomplexa[1:5])
+}
 \author{
   Grady Weyenberg
 }

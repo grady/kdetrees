@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  18 JAN 2013 15:48
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  27 JUL 2013 17:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/grady/statistics/other/kdetrees/vignettes/simulation.tex
-(/Users/grady/statistics/other/kdetrees/vignettes/simulation.tex
+**/Users/grady/src/kdetrees/vignettes/simulation.tex
+(/Users/grady/src/kdetrees/vignettes/simulation.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -197,24 +197,24 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./simulation.aux)
 \openout1 = `simulation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 6.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 7.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 7.
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    ... okay on input line 7.
 
 (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -278,63 +278,62 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 7.
+(Font)              <12> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 7.
+(Font)              <8> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 7.
-LaTeX Font Info:    Try loading font information for T1+aett on input line 23.
+(Font)              <6> on input line 8.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 24.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 ) [1
 
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<simulation-008.pdf, id=12, 433.62pt x 289.08pt>
-File: simulation-008.pdf Graphic file (type pdf)
- <use simulation-008.pdf>
-Package pdftex.def Info: simulation-008.pdf used on input line 115.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 86.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 86.
+
+<img/rocmix.pdf, id=12, 433.62pt x 289.08pt>
+File: img/rocmix.pdf Graphic file (type pdf)
+ <use img/rocmix.pdf>
+Package pdftex.def Info: img/rocmix.pdf used on input line 127.
 (pdftex.def)             Requested size: 375.80544pt x 250.5492pt.
+ [2] [3 <./img/rocmix.pdf>] [4] <img/tpr.pdf, id=30, 433.62pt x 433.62pt>
+File: img/tpr.pdf Graphic file (type pdf)
+ <use img/tpr.pdf>
+Package pdftex.def Info: img/tpr.pdf used on input line 238.
+(pdftex.def)             Requested size: 375.80544pt x 375.8238pt.
 
-<simulation-009.pdf, id=13, 325.215pt x 289.08pt>
-File: simulation-009.pdf Graphic file (type pdf)
- <use simulation-009.pdf>
-Package pdftex.def Info: simulation-009.pdf used on input line 122.
-(pdftex.def)             Requested size: 375.80544pt x 334.07588pt.
+[5 <./img/tpr.pdf>] <img/bench.pdf, id=41, 505.89pt x 216.81pt>
+File: img/bench.pdf Graphic file (type pdf)
 
-<simulation-013.pdf, id=14, 469.755pt x 252.945pt>
-File: simulation-013.pdf Graphic file (type pdf)
- <use simulation-013.pdf>
-Package pdftex.def Info: simulation-013.pdf used on input line 148.
-(pdftex.def)             Requested size: 375.80544pt x 202.35626pt.
-
-[2] <simulation-015.pdf, id=18, 325.215pt x 216.81pt>
-File: simulation-015.pdf Graphic file (type pdf)
- <use simulation-015.pdf>
-Package pdftex.def Info: simulation-015.pdf used on input line 190.
-(pdftex.def)             Requested size: 375.80544pt x 250.55692pt.
-
-[3 <./simulation-008.pdf>] [4 <./simulation-009.pdf>] [5 <./simulation-013.pdf>
- <./simulation-015.pdf>] (./simulation.aux) ) 
+<use img/bench.pdf>
+Package pdftex.def Info: img/bench.pdf used on input line 269.
+(pdftex.def)             Requested size: 375.80544pt x 161.06213pt.
+ [6 <./img/bench.pdf>] (./simulation.aux) ) 
 Here is how much of TeX's memory you used:
- 2745 strings out of 493488
- 39782 string characters out of 3141326
- 89884 words of memory out of 3000000
- 5990 multiletter control sequences out of 15000+200000
+ 2741 strings out of 493488
+ 39512 string characters out of 3141326
+ 88868 words of memory out of 3000000
+ 5986 multiletter control sequences out of 15000+200000
  20787 words of font info for 49 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 37i,6n,23p,488b,278s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2012/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2012/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2012/texmf-dist/font
-s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on simulation.pdf (5 pages, 117650 bytes).
+ 37i,6n,23p,543b,290s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2012/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2012/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2012/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2012/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2012/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmtt10.pfb>
+Output written on simulation.pdf (6 pages, 131990 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 51 compressed objects within 1 object stream
+ 78 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

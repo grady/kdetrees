@@ -2,18 +2,13 @@
 \alias{as.matrix.multiPhylo}
 \title{dissimilarity map tree vectorization}
 \usage{
-  \method{as.matrix}{multiPhylo} (x, use.blen = FALSE,
-    unroot = TRUE, ...)
+  \method{as.matrix}{multiPhylo} (x, ...)
 }
 \arguments{
   \item{x}{an ape::multiPhylo object.}
 
-  \item{use.blen}{use branch length information in the
-  calculation?}
-
-  \item{unroot}{unroot trees first?}
-
-  \item{...}{additional options for \code{dist}}
+  \item{...}{additional options for
+  \code{ape::cophenetic.phylo}}
 }
 \value{
   a row matrix of tree vectors
@@ -23,6 +18,9 @@
   tip-to-tip path lengths. Branch length information may be
   optionally discarded (the default), resulting in vectors
   based solely on tree topology.
+}
+\examples{
+as.matrix(apicomplexa[1:5])
 }
 \author{
   Grady Weyenberg

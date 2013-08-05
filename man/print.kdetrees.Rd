@@ -1,13 +1,13 @@
 \name{print.kdetrees}
 \alias{print.kdetrees}
-\title{Summarize a kdetrees object}
+\title{Summarize a kdetrees object in human-readable form.}
 \usage{
   \method{print}{kdetrees} (x, ...)
 }
 \arguments{
   \item{x}{object to be printed}
 
-  \item{...}{unused}
+  \item{...}{unused, required for generic compatability}
 }
 \value{
   invisible(x)

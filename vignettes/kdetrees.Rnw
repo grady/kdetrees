@@ -4,7 +4,10 @@
 \title{Using KDETrees}
 \author{Grady Weyenberg}
 
-\usepackage{Sweave}
+<<preamble,echo=FALSE,results=hide>>=
+ops <- options(width=60)
+library(kdetrees)
+@ 
 \begin{document}
 \maketitle
 
@@ -35,11 +38,9 @@ called {\tt trees.tre} in the current working directory. It will write
 out 4 files: {\tt outliers.tre} a newick file containing only the
 trees identified as outliers; {\tt results.csv} a csv files with the
 density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic images.
-\begin{Schunk}
-\begin{Sinput}
-> kdetrees.complete("trees.tre")
-\end{Sinput}
-\end{Schunk}
+<<kdetrees.complete,eval=FALSE>>=
+kdetrees.complete("trees.tre")
+@ 
 
 The {\tt kdetrees.complete} function also accepts any of the
 parameters accepted by the {\tt kdetrees} function, as described in
@@ -55,35 +56,20 @@ the following examples, many functions are a part of the {\tt ape}
 package, and it is recommended that you import it. For example, to
 load the {\tt apicomplexa} dataset, I placed the Newick tree strings
 into the {\tt apicompexa.tre} file and used the following command:
-\begin{Schunk}
-\begin{Sinput}
-> blibrary(ape)
-> apicomplexa <- read.tree("apicomplexa.tre")
-\end{Sinput}
-\end{Schunk}
+<<read.tree,eval=FALSE>>=
+blibrary(ape)
+apicomplexa <- read.tree("apicomplexa.tre")
+@ 
 
 \subsection{Running kdetrees}
 \label{sec:running-kdetrees}
 
 The simplest way to run {\tt kdetrees} is to call the function of the
 same name, with the list of trees as the first argument.
-\begin{Schunk}
-\begin{Sinput}
-> result <- kdetrees(apicomplexa)
-> result
-\end{Sinput}
-\begin{Soutput}
-Call: kdetrees(trees = apicomplexa)
-Density estimates:
-    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-  0.9963  65.8700  82.6400  77.3000  94.4900 114.5000 
-Cutoff:  22.92261 
-
-Outliers detected:
- [1] 488.tre 497.tre 515.tre 546.tre 547.tre 641.tre 660.tre
- [8] 662.tre 728.tre 747.tre 773.tre 780.tre
-\end{Soutput}
-\end{Schunk}
+<<kdetrees>>=
+result <- kdetrees(apicomplexa)
+result
+@ 
 
 There are 3 main settings which control the method used in the
 analysis: the outlier detection tuning parameter, the distance
@@ -94,26 +80,18 @@ respectively. By default the geodesic distance with branch lengths is
 used, with a tuning parameter of $k=1.5$.
 
 For example, this call uses topology-based dissimilarity map distance.
-\begin{Schunk}
-\begin{Sinput}
-> kdetrees(apicomplexa, k=1.25, distance="diss", topo.only=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<kdetrees.diss,eval=FALSE>>=
+kdetrees(apicomplexa, k=1.25, distance="diss", topo.only=TRUE)
+@ 
 
 \begin{figure}
   \centering
-\begin{Schunk}
-\begin{Sinput}
-> plot(result)
-\end{Sinput}
-\end{Schunk}
-\includegraphics{kdetrees-plot}
-\begin{Schunk}
-\begin{Sinput}
-> hist(result)
-\end{Sinput}
-\end{Schunk}
-\includegraphics{kdetrees-hist}
+<<plot,fig=TRUE,height=4>>=
+plot(result)
+@ 
+<<hist,fig=TRUE,height=4>>=
+hist(result)
+@   
   \caption{Diagnostic plots can be created with {\tt plot} and {\tt
       hist}.}
   \label{fig:diagplots}
@@ -144,12 +122,9 @@ than the others.
 
   \begin{figure}[h]
     \centering
-\begin{Schunk}
-\begin{Sinput}
-> plot(result$outliers[[1]])
-\end{Sinput}
-\end{Schunk}
-\includegraphics{kdetrees-outlierplot}
+<<outlierplot,fig=TRUE,height=4>>=
+plot(result$outliers[[1]])
+@       
     \caption{A plot of an outlying tree.}
     \label{fig:treeplot}
   \end{figure}
@@ -158,12 +133,10 @@ than the others.
 If you would like to export the outlier trees to a file, you may use
 the {\tt write.tree} function in the {\tt ape} package. Data frames
 can also be created from the result object.
-\begin{Schunk}
-\begin{Sinput}
-> write.tree(result$outliers,file="outliers.tre")
-> as.data.frame(result)
-\end{Sinput}
-\end{Schunk}
+<<write.tree,eval=FALSE>>=
+write.tree(result$outliers,file="outliers.tre")
+as.data.frame(result)
+@ 
 
 \subsection{Advanced Options}
 \label{sec:advanced-options}
@@ -175,17 +148,13 @@ adaptive method entirely and provide a constant bandwidth, using the
 as a set of parameters for a call to {\tt bw.nn}. For example, to
 change the neighborhood to include 50\% of the sample we pass the
 following option.
-\begin{Schunk}
-\begin{Sinput}
-> kdetrees(apicomplexa, bw=list(prop=0.5))
-\end{Sinput}
-\end{Schunk}
+<<adv1,eval=FALSE>>=
+kdetrees(apicomplexa, bw=list(prop=0.5))
+@ 
 If {\tt bw} is set to a single number, a constant bandwidth is used.
-\begin{Schunk}
-\begin{Sinput}
-> kdetrees(apicomplexa, bw=6)
-\end{Sinput}
-\end{Schunk}
+<<adv2,eval=FALSE>>=
+kdetrees(apicomplexa, bw=6)
+@ 
 
 \subsection{CLI}
 \label{sec:CLI}
@@ -199,3 +168,6 @@ $ Rscript -e 'library(kdetrees); kdetrees.complete("trees.tre")'
 
 
 \end{document}
+<<postamble,echo=FALSE,results=hide>>=
+options(ops)
+@ 
