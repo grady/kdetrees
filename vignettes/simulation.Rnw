@@ -241,7 +241,7 @@ save(kdebench3,pmcbench3,file="sim/bench.Rda")
 foo <- function(x) data.frame(n=n,time=ISOdate(2001,1,1,0)+as.data.frame(t(x))$elapsed,method=as.character(match.call()[[2]]))
 bench.df <- rbind(foo(kdebench3),foo(pmcbench3))
 ggplot(bench.df,aes(x=n,y=time,pch=method))+geom_point(size=3)+labs(y="hours",x="number of trees")+theme(legend.position="top")+scale_x_continuous(limits=c(500,5000))+scale_shape(labels=c("kdetrees","pmcoa"))
-ggsave("img/bench.pdf",height=3,width=7)
+ggsave("img/bench.pdf",height=3,width=5)
 @ 
 
 \begin{figure}
@@ -252,6 +252,20 @@ ggsave("img/bench.pdf",height=3,width=7)
 \end{figure}
 
 <<eval=FALSE>>=
+partition <- function(n, x) if(length(x) >= n) c(list(head(x,n)), partition(n, tail(x, -n)))
+
+roc.kde.10 <- roc.sim(k,neff=2000,partition(10,out.trees), ncoal=90, f=kdetrees)
+roc.kde.5 <- roc.sim(k,neff=2000,partition(5,out.trees), ncoal=95, f=kdetrees)
+
+roc.df2 <- rbind(cbind(as.data.frame(t(roc.kde.10)),nout="10"), 
+                 cbind(as.data.frame(t(roc.kde.5)),nout="5"),
+                 cbind(as.data.frame(t(roc.kde)),nout="1"))
+
+ggplot(roc.df2,aes(x=type1,y=hit,lty=nout)) + geom_line() + xlim(0,1) + theme(legend.position="top")
+roc.mix.plot
+
+roc.kde.2k <- roc.sim(k,neff=2000,partition(10,out.trees), ncoal=1990, f=kdetrees)
+
 #ggplot(sim1.res,aes(neff,values,color=Method,shape=Method,linetype=Distance)) + facet_grid(.~model) + theme(legend.position="top",legend.box="horizontal") + coord_trans("log") + stat_smooth(se=FALSE,method="loess",span=.99) + geom_point(size=2.5) + labs(title="Outliers Identified",x="Effective Population Size",y="Proportion of simulations") + scale_color_brewer(type="qual",palette=2) + scale_x_continuous(breaks=c(500,1000,1500,2000,3000)) + scale_color_grey(end=0.5)
 @   
 
