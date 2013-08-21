@@ -2,24 +2,24 @@
 \alias{kdetrees.complete}
 \title{Complete kdetrees analysis convenience function}
 \usage{
-  kdetrees.complete(file, ..., tree.file = "outliers.tre",
-    csv.file = "results.csv", plot.file = "plot.png",
-    hist.file = "hist.png")
+  kdetrees.complete(infile, ...,
+    treeoutfile = "outliers.tre", csvfile = "results.csv",
+    plotfile = "plot.png", histfile = "hist.png")
 }
 \arguments{
-  \item{file}{newick file with trees}
+  \item{infile}{newick file with trees}
 
   \item{...}{additional parameters for kdetrees}
 
-  \item{tree.file}{write outlier trees in newick format to
-  this file}
+  \item{treeoutfile}{write outlier trees in newick format
+  to this file}
 
-  \item{csv.file}{write density results to this file}
+  \item{csvfile}{write density results to this file}
 
-  \item{plot.file}{print scatterplot of results to this
+  \item{plotfile}{print scatterplot of results to this
   file}
 
-  \item{hist.file}{print histogram of density estimates to
+  \item{histfile}{print histogram of density estimates to
   this file}
 }
 \value{

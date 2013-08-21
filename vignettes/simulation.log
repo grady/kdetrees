@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  27 JUL 2013 17:37
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  21 AUG 2013 07:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -291,27 +291,27 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 86.
+(Font)              <7> on input line 87.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 86.
+(Font)              <5> on input line 87.
 
 <img/rocmix.pdf, id=12, 433.62pt x 289.08pt>
 File: img/rocmix.pdf Graphic file (type pdf)
  <use img/rocmix.pdf>
-Package pdftex.def Info: img/rocmix.pdf used on input line 127.
+Package pdftex.def Info: img/rocmix.pdf used on input line 153.
 (pdftex.def)             Requested size: 375.80544pt x 250.5492pt.
  [2] [3 <./img/rocmix.pdf>] [4] <img/tpr.pdf, id=30, 433.62pt x 433.62pt>
 File: img/tpr.pdf Graphic file (type pdf)
  <use img/tpr.pdf>
-Package pdftex.def Info: img/tpr.pdf used on input line 238.
+Package pdftex.def Info: img/tpr.pdf used on input line 241.
 (pdftex.def)             Requested size: 375.80544pt x 375.8238pt.
 
-[5 <./img/tpr.pdf>] <img/bench.pdf, id=41, 505.89pt x 216.81pt>
+[5 <./img/tpr.pdf>] <img/bench.pdf, id=41, 361.35pt x 216.81pt>
 File: img/bench.pdf Graphic file (type pdf)
 
 <use img/bench.pdf>
-Package pdftex.def Info: img/bench.pdf used on input line 269.
-(pdftex.def)             Requested size: 375.80544pt x 161.06213pt.
+Package pdftex.def Info: img/bench.pdf used on input line 271.
+(pdftex.def)             Requested size: 375.80544pt x 225.48369pt.
  [6 <./img/bench.pdf>] (./simulation.aux) ) 
 Here is how much of TeX's memory you used:
  2741 strings out of 493488
@@ -320,7 +320,7 @@ Here is how much of TeX's memory you used:
  5986 multiletter control sequences out of 15000+200000
  20787 words of font info for 49 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 37i,6n,23p,543b,290s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,6n,23p,527b,280s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2012/texmf-dist/fo
@@ -330,7 +330,7 @@ type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2012/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2012/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmtt10.pfb>
-Output written on simulation.pdf (6 pages, 131990 bytes).
+Output written on simulation.pdf (6 pages, 132294 bytes).
 PDF statistics:
  78 PDF objects out of 1000 (max. 8388607)
  55 compressed objects within 1 object stream

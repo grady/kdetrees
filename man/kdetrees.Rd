@@ -40,9 +40,10 @@
 \details{
   If bw is a single number, it will be used as a single
   constant bandwidth. It can also be a vector, in which
-  case it will be used as variable bandwidths. Finally, if
-  it is a list, the list will be passed as arguments to the
-  bw.nn adaptive bandwith function.
+  case it will be used as variable bandwidths for each
+  tree, repectively. Finally, if it is a list (default),
+  the list will be passed as arguments to the bw.nn
+  adaptive bandwith function.
 
   ... Is passed to either \code{distory::dist.multiPhylo}
   or \code{dist.diss}, as appropriate. See the help for

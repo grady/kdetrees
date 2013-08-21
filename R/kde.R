@@ -35,10 +35,14 @@
 kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgroup=NULL,
                      topo.only=FALSE,bw=list(),greedy=FALSE,...) {
   distance <- match.arg(distance)
+  browser()
+  if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo"))) class(trees) <- "multiPhylo"
+
   if (topo.only) {
     trees <- lapply(trees,compute.brlen, method = 1)
     class(trees) <- "multiPhylo"
   }
+  
   if (is.character(outgroup)) {
     trees <- lapply(trees,root,outgroup,resolve.root=TRUE)
     trees <- lapply(trees,"[<-","node.label", NULL)
@@ -73,6 +77,8 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgrou
   structure(list(density=x, i=i, outliers=trees[i]), class="kdetrees",
             call=match.call(), c=c)
 }
+
+
 ##' Performs a complete kdetrees analysis, starting with reading trees
 ##' from a newick file on disk, and writing result files to the
 ##' working directory. Names and location of output files may be

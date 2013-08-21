@@ -16,12 +16,13 @@ library(kdetrees)
 
 KDETrees is a tool for finding discordant phylogenetic trees. It takes
 as input an {\tt ape::multiPhylo} object, which contains a set of
-trees, and produces a score for each tree. High scores mean the tree
-is relatively similar to other trees in the sample, while low scores
-indicate that the tree in question may be discordant with the
-others. Low scoring trees are identified as putative ``outliers'' with
-the cutoff controlled by a tuning parameter $k$, and their
-contribution to the calculation is removed.
+trees, and produces a score for each tree. (A list of {\tt phylo}
+objects is also accepted.) High scores mean the tree is relatively
+similar to other trees in the sample, while low scores indicate that
+the tree in question may be discordant with the others. Low scoring
+trees are identified as putative ``outliers'' with the cutoff
+controlled by a tuning parameter $k$, and their contribution to the
+calculation is removed.
 
 
 \section{Using {\tt kdetrees}}
@@ -38,6 +39,7 @@ called {\tt trees.tre} in the current working directory. It will write
 out 4 files: {\tt outliers.tre} a newick file containing only the
 trees identified as outliers; {\tt results.csv} a csv files with the
 density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic images.
+
 <<kdetrees.complete,eval=FALSE>>=
 kdetrees.complete("trees.tre")
 @ 

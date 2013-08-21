@@ -1,6 +1,6 @@
 \name{dist.diss}
 \alias{dist.diss}
-\title{pairwise tree distances}
+\title{Compute pairwise tree distances}
 \usage{
   dist.diss(x, ..., method = "euclidean", p = 2)
 }
@@ -19,7 +19,7 @@
   a dist object with tree-to-tree distances
 }
 \description{
-  pairwise tree distances
+  Compute pairwise tree distances
 }
 \examples{
 dist.diss(apicomplexa[1:5])
