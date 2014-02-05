@@ -70,7 +70,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgrou
       if (length(i) < 1) break
       x <- estimate(km,i)
       c2 <- cutoff(x[-i], k)
-      if(is.na(c2)) browser()
+      ## if(is.na(c2)) browser()
       if(c2 > c) c <- c2 else break
     }
   }
@@ -97,7 +97,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgrou
 kdetrees.complete <- function(infile,...,treeoutfile="outliers.tre",
                               csvfile="results.csv",plotfile="plot.png",
                               histfile="hist.png"){
-  trees <- read.tree(file)
+  trees <- read.tree(infile)
   if (is.null(names(trees))) names(trees) <- paste("tree",seq_along(trees),sep="")
   if (!inherits(trees,"multiPhylo")) stop("Could not read tree file")
   

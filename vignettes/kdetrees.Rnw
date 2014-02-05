@@ -59,7 +59,7 @@ package, and it is recommended that you import it. For example, to
 load the {\tt apicomplexa} dataset, I placed the Newick tree strings
 into the {\tt apicompexa.tre} file and used the following command:
 <<read.tree,eval=FALSE>>=
-blibrary(ape)
+library(ape)
 apicomplexa <- read.tree("apicomplexa.tre")
 @ 
 
