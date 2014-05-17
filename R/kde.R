@@ -35,7 +35,6 @@
 kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgroup=NULL,
                      topo.only=FALSE,bw=list(),greedy=FALSE,...) {
   distance <- match.arg(distance)
-  browser()
   if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo"))) class(trees) <- "multiPhylo"
 
   if (topo.only) {
