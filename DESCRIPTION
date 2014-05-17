@@ -22,10 +22,3 @@ Suggests:
     optparse
 URL: http://cophylogeny.net/
 LazyData: TRUE
-Collate:
-    'bw.R'
-    'dist.diss.R'
-    'kde.R'
-    'kdetrees-package.R'
-    'kernels.R'
-    'util.R'
