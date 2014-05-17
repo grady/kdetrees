@@ -1,3 +1,5 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
+
 ##' nearest-neighbor adaptive bandwidth selection
 ##' 
 ##' For each row in pairwise distance matrix find the distance to the

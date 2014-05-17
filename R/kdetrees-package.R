@@ -1,3 +1,5 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
+
 ##' kdetrees
 ##' 
 ##' @docType package

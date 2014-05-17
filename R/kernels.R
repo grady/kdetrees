@@ -1,3 +1,4 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
 ### Kernel functions are defined here. These functions have a template
 ### function(x,bw,...)
 ### they should be symmetric about zero and should integrate to a constant

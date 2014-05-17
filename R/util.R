@@ -1,3 +1,4 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
 ##' Summarize a kdetrees object in human-readable form.
 ##'
 ##' Pretty-prints the results of a kdetrees ananlysis to console.

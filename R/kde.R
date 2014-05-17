@@ -1,3 +1,5 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
+
 ##' Analyze a set of phylogenetic trees and attempt to identify trees
 ##' which are significantly discordant with other trees in the sample
 ##' (outlier trees).

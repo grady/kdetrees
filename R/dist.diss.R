@@ -1,3 +1,5 @@
+### Copyright (C) 2014 -- Grady Weyenberg ###
+
 ##' dissimilarity map tree vectorization
 ##'
 ##' Dissimilarity maps convert trees to vectors using tip-to-tip path
