@@ -1,8 +1,13 @@
 \documentclass{article}
-%\VignetteIndexEntry{Using KDETrees}
+%\VignetteIndexEntry{kdetrees Manual}
 %\usepackage{fullpage}
-\title{Using KDETrees}
+\usepackage{natbib}
+\usepackage{bibentry}
+\nobibliography*
+
+\title{kdetrees Manual}
 \author{Grady Weyenberg}
+
 
 \usepackage{Sweave}
 \begin{document}
@@ -12,29 +17,38 @@
 \label{sec:introduction}
 
 KDETrees is a tool for finding discordant phylogenetic trees. It takes
-as input an {\tt ape::multiPhylo} object, which contains a set of
-trees, and produces a score for each tree. High scores mean the tree
+as input a collection of trees (as a {\tt ape::multiPhylo} object),
+and produces a \emph{score} for each tree. High scores mean the tree
 is relatively similar to other trees in the sample, while low scores
 indicate that the tree in question may be discordant with the
-others. Low scoring trees are identified as putative ``outliers'' with
-the cutoff controlled by a tuning parameter $k$, and their
-contribution to the calculation is removed.
+others. Low scoring trees are identified as putative \emph{outliers},
+and their contribution to the score calculation is removed. The result
+object contains scores for each tree, and a list of the putative
+outlier trees. If you use the program in your research, please cite
+our paper:
+\begin{quote}
+  \bibentry{kdetrees}.
+\end{quote}
 
 
 \section{Using {\tt kdetrees}}
 \label{sec:use}
 The simplest method of using the software is the {\tt
   kdetrees.complete} function. This is a convienence function which
-will do all the steps of the analysis at once. The simplest use is to
-simply pass it the filename of a Newick file containing the trees to
-be analyzed. It will write several result files to the R working
-directory ({\tt getwd}).
+will do all the steps of the analysis at once: importing trees from
+file, performing the analysis, and producing output files. Basic use
+is to simply pass it the filename of a Newick file containing the
+trees to be analyzed. It will write several result files to the R
+working directory ({\tt getwd}).
 
-This call assumes there is a file containing newick formatted trees
-called {\tt trees.tre} in the current working directory. It will write
+The call below assumes there is a file containing newick formatted trees
+named {\tt trees.tre} in the current working directory. It will write
 out 4 files: {\tt outliers.tre} a newick file containing only the
 trees identified as outliers; {\tt results.csv} a csv files with the
-density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic images.
+density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic
+images. The names of these output files can be customized with futher
+arguments to {\tt kdetrees.complete}.
+
 \begin{Schunk}
 \begin{Sinput}
 > kdetrees.complete("trees.tre")
@@ -49,18 +63,22 @@ Sections \ref{sec:running-kdetrees} and \ref{sec:advanced-options}.
 \subsection{Importing Trees}
 \label{sec:importing-trees}
 
-Trees may be imported using any of the methods provided by {\tt
-  ape}. (See {\tt ?read.tree} and {\tt ?read.nexus} for examples.) In
-the following examples, many functions are a part of the {\tt ape}
-package, and it is recommended that you import it. For example, to
-load the {\tt apicomplexa} dataset, I placed the Newick tree strings
-into the {\tt apicompexa.tre} file and used the following command:
+Trees may be imported using any of the methods provided by the {\tt
+  ape} package. (See {\tt ?read.tree} and {\tt ?read.nexus} for
+examples.) In the following examples, many functions are a part of the
+{\tt ape} package, and it is recommended that you import it. For
+example, to load the example {\tt apicomplexa} dataset, I placed the
+Newick tree strings into a file named {\tt apicompexa.tre} file and
+ran the commands:
 \begin{Schunk}
 \begin{Sinput}
-> blibrary(ape)
+> library(ape)
 > apicomplexa <- read.tree("apicomplexa.tre")
 \end{Sinput}
 \end{Schunk}
+\emph{NB: The apicomplexa dataset is already included in the
+  kdetrees package as example data, you do not need to import it. This
+  is purely an example showing how to import your own trees.}
 
 \subsection{Running kdetrees}
 \label{sec:running-kdetrees}
@@ -86,12 +104,12 @@ Outliers detected:
 \end{Schunk}
 
 There are 3 main settings which control the method used in the
-analysis: the outlier detection tuning parameter, the distance
-computation method, and whether or not to include branch length
-information in the distance calculation. These are controlled by the
-parameters {\tt k}, {\tt distance}, and {\tt topo.only},
-respectively. By default the geodesic distance with branch lengths is
-used, with a tuning parameter of $k=1.5$.
+analysis: the outlier detection tuning parameter ({\tt k}), the
+distance computation method ({\tt distance}), and whether or not to
+include branch length information in the distance calculation ({\tt
+  topo.only}).  The default options are {\tt distance="geodesic"},
+{\tt topo.only=FALSE}, and {\tt k=1.5}.
+
 
 For example, this call uses topology-based dissimilarity map distance.
 \begin{Schunk}
@@ -131,7 +149,7 @@ The result object is a list with three components, as well as several
 attributes that are used internally.  The first element, {\tt
   density}, has the computed score for each tree in the input
 list. This is the variable displayed in the diagnostic plots. The
-second elemen,t {\tt i}, contains the indices of the low scoring trees
+second element, {\tt i}, contains the indices of the low scoring trees
 which were not included in the calculations. Finally, the {\tt
   outliers} element contains the trees which were identified as
 outliers.
@@ -155,26 +173,46 @@ than the others.
   \end{figure}
 
 
-If you would like to export the outlier trees to a file, you may use
-the {\tt write.tree} function in the {\tt ape} package. Data frames
-can also be created from the result object.
+  An {\tt as.data.frame} method is provided for the result object,
+  which can be used to export the results using the standard R
+  methods. (Such as {\tt write.csv}.) The list of outlier trees can be
+  exported using {\tt ape::write.tree}
 \begin{Schunk}
 \begin{Sinput}
 > write.tree(result$outliers,file="outliers.tre")
-> as.data.frame(result)
+> result.df <- as.data.frame(result)
+> write.csv(result.df, file="scores.csv")
 \end{Sinput}
 \end{Schunk}
 
-\subsection{Advanced Options}
+\section{Advanced Options}
 \label{sec:advanced-options}
+
+\subsection{Distance Methods}
+There are currently two methods implemented for the {\tt distance}
+option in {\tt kdetrees}: The {\tt "geodesic"} method, based on work
+by \citet{bhv}, as well as that of \citet{owen}; and the {\tt "dissimilarity"} map method, which utilizes
+pairwise tip-to-top distances.
+
+Each of these distances can use either branch lengths supplied by the
+input trees, {\tt topo.only=FALSE}, or the branch lengths can be
+ignored by setting {\tt topo.only=TRUE}.
+
+
+\subsection{Bandwidth Selection}
+
 Currently, kdetrees uses an adaptive bandwidth method based on a
 nearest-neighbor calculation by default. It is possible to control the
 number of trees used to define the neighborhood, or disable the
 adaptive method entirely and provide a constant bandwidth, using the
-{\tt bw} parameter. If {\tt bw} is passed as a list, the list is used
-as a set of parameters for a call to {\tt bw.nn}. For example, to
-change the neighborhood to include 50\% of the sample we pass the
-following option.
+{\tt bw} parameter. 
+
+If the {\tt bw} parameter is supplied a list, the list is used as a
+set of parameters for a call to {\tt bw.nn}. Currently, the only
+interesting setting that may be passed in this way is {\tt prop},
+which controls the proportion of the set of trees used to define the
+neighborhoods. For example, to change the neighborhood to include 50\%
+of the sample we pass the following option.
 \begin{Schunk}
 \begin{Sinput}
 > kdetrees(apicomplexa, bw=list(prop=0.5))
@@ -186,16 +224,26 @@ If {\tt bw} is set to a single number, a constant bandwidth is used.
 > kdetrees(apicomplexa, bw=6)
 \end{Sinput}
 \end{Schunk}
+If {\tt bw} is a vector, the values are used as bandwidths for the
+corresponding trees in the sample, possibly recycling the values if needed.
 
-\subsection{CLI}
+\subsection{Command Line Interface}
 \label{sec:CLI}
 
 CLI use can be achieved by using the {\tt Rscript} executable included
 with R. For example, this CLI command replicates the first example call in
 Section \ref{sec:use}.
-\begin{Soutput}
+\begin{verbatim}
 $ Rscript -e 'library(kdetrees); kdetrees.complete("trees.tre")'
-\end{Soutput}
+\end{verbatim}
+The desired R commands can also be placed into a R script file
+(e.g. {\tt myscript.R}), and run using
+\begin{verbatim}
+$ Rscript myscript.R
+\end{verbatim}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 
 \end{document}
