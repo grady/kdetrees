@@ -17,6 +17,7 @@ Depends:
 Imports:
     ape,
     distory,
-    ggplot2
+    ggplot2,
+    hgm
 URL: http://github.com/grady/kdetrees
 LazyData: TRUE

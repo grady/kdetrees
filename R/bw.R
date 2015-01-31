@@ -14,9 +14,11 @@
 ##' dm <- as.matrix(dist.diss(apicomplexa[1:20]))
 ##' bw.nn(dm)
 bw.nn <- function(x,prop=0.2,tol=1e-6){
-  out <- apply(x,1,function(y) quantile(y,prop))
+#  out <- apply(x,1,function(y) quantile(y,prop))
+  out <- apply(x, 1, quantile, prop)
   is.zero <- out < tol
-  if(sum(is.zero)>0) out[is.zero] <- apply(x[is.zero,],1,function(y) min(y[y>tol]))
+  if(sum(is.zero)>0)
+      out[is.zero] <- apply(x[is.zero,],1,function(y) min(y[y>tol]))
   out
 }
 
