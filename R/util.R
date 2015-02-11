@@ -133,23 +133,35 @@ Northant <- function(n){
     res
 }
 
-find.const <- function(blens,bw,nOrth){
-    blens <- sort(blens)
-    d <- length(blens)
-    bw <- diag(d) * bw
-    c0 <- 1/sqrt((2 * pi)^d * det(bw)) #gaussian const at center
-    p1 <- hgm.ncorthant(bw, blens)
-    p0 <- hgm.ncorthant(bw, -blens)
-
-    blens[1:2] <- -blens[1:2]
-    p2 <- hgm.ncorthant(bw, blens)
-
-    ll <- (p1 + p0*(nOrth-1))/c0
-    ul <- (p1 + p2*(nOrth-1))/c0
-    c(ll=ll,ul=ul)
-}
-## need a function that returns for each
+##' Find BHV constant lower bound
+##'
+##' Obtain a lower bound for the kernel integration constants
+##' for centered on the trees with bandwidths bw.
+##' @param trees list of trees at which kernels will be centered
+##' @param bw bandwidth for each kernel
+##' @return a vector of kernel integration constant lower bounds
+##' @author Grady Weyenberg
 bhv.consts <- function(trees,bw){
+    x <- sapply(trees,internal.blens)
+    if(!is.matrix(x)) stop ("different Ntips in trees")
+    n <- Northant(Ntip(trees[[1]])) #number of orthants
+    d <- nrow(x) #dim of orthants
+    N <- ncol(x) #number of trees
+    res <- numeric(N) #result obj
+
+    if ( length(bw) == 1L ) bw <- rep(bw,N)
+
+    for (i in 1:N){
+        bm <- diag(d) * bw[i] * bw[i]
+        c0 <- 1/sqrt((2 * pi)^d * det(bm)) #gaussian const at center
+        p1 <- hgm.ncorthant(bm, x[,i])
+        p0 <- hgm.ncorthant(bm, -x[,1])
+        res[i] <- (p1 + p0*(n-1))/c0
+    }
+    res
+}
+
+bhv.consts.ub <- function(trees,bw){
     x <- sapply(trees,internal.blens)
     if(!is.matrix(x)) stop ("different Ntips in trees")
     n <- Northant(Ntip(trees[[1]])) #number of orthants
@@ -168,12 +180,13 @@ bhv.consts <- function(trees,bw){
         y[1] <- -y[1]
         p2 <- hgm.ncorthant(bm,y)
         
-        res[i] <- (p1 + p0*(n-1))/c0
-#        res[i] <- (p1 + p2 * 3 + p0 * (n-4))/c0
+        res[i] <- (p1 + p2 * 2 + p0 * (n-3))/c0
     }
-#    print(x)
     res
 }
+
+
 ## Suppress the NOTES from R CMD check about undefined variables (ggplot calls)
 globalVariables(c("outlier","index"))
+
 

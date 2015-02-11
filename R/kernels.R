@@ -23,7 +23,7 @@ normkern <- function(x, bw=1.0, bhv.c=NULL, delta=2L){
     if(is.null(bhv.c)){
       exp(-abs(x/bw)^delta) / bw
     } else {
-      exp(-abs(x/bw)^delta) * bhv.c
+      exp(-abs(x/bw)^delta) / bhv.c
     }
 }
     

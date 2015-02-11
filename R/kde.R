@@ -34,16 +34,17 @@
 ##' kdeobj$outliers
 ##'
 ##' kdetrees(apicomplexa, k=2.0, distance="dissimilarity",topo.only=FALSE)
-kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgroup=NULL,
-                     topo.only=FALSE,bw=list(),greedy=FALSE,...) {
+kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
+                     outgroup=NULL, topo.only=FALSE,bw=list(),greedy=FALSE,...) {
   distance <- match.arg(distance)
 
-  if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo")))
-      class(trees) <- "multiPhylo"
-
+  if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo"))){
+    class(trees) <- "multiPhylo"
+  }
+  
   if(inherits(trees,"multiPhylo")){
-      trees <- lapply(trees,multi2di)
-      class(trees) <- "multiPhylo"
+    trees <- lapply(trees,multi2di)
+    class(trees) <- "multiPhylo"
   }
   
   if (topo.only) {
@@ -71,12 +72,12 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"), outgrou
   }
   
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
-  if(distance == "geodesic"){
-    bhv.c <- bhv.consts(trees,bw)
-    km <- normkern(dm,bw,bhv.c)
-  } else {
-    km <- normkern(dm,bw)
-  }
+  ## if(distance == "geodesic"){
+  ##   bhv.c <- bhv.consts(trees,bw)
+  ##   km <- normkern(dm,bw,bhv.c)
+  ## } else {
+  km <- normkern(dm,bw)
+  ## }
   x <- estimate(km)
   c <- cutoff(x, k)
   i <- which( x < c )
@@ -136,10 +137,10 @@ kdetrees.complete <- function(infile,...,treeoutfile="outliers.tre",
 estimate <- function(x,i=integer()){
   if(length(i) > 0)
 #    rowSums(x[,-i]) - (!(1:nrow(x) %in% i)) * diag(x)
-    colSums(x[-i,]) - (!(1:ncol(x) %in% i)) * diag(x)
+    log(colSums(x[-i,]) - (!(1:ncol(x) %in% i)) * diag(x))
   else
 #    rowSums(x) - diag(x)
-    colSums(x) - diag(x)
+    log(colSums(x) - diag(x))
 }
 
 

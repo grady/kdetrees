@@ -3,7 +3,7 @@
 \alias{normkern}
 \title{Generalized Gaussian kernel}
 \usage{
-normkern(x, bw = 1, delta = 2L)
+normkern(x, bw = 1, bhv.c = NULL, delta = 2L)
 }
 \arguments{
 \item{x}{places to evaluate kernel}
