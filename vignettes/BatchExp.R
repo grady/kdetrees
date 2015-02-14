@@ -1,7 +1,7 @@
 library(kdetrees)
-library(hgm)
+##library(hgm)
 library(BatchExperiments)
-library(devtools)
+##library(devtools)
 library(ape)
 
 
@@ -19,7 +19,8 @@ makeDataset <- function(static,neff,ncoal=100,sp.file){
                                c("-n",neff,"-s",sp.file,"-N",ncoal),stdout=TRUE),
                            keep.multi=TRUE)
     nout <- 1
-    structure(c(sample(static,nout),coaltrees),nout=nout)
+    structure(c(.uncompressTipLabel(sample(static,nout)),
+              .uncompressTipLabel(coaltrees)),nout=nout)
 }
 
 ## algorithm

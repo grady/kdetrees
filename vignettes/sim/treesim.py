@@ -26,7 +26,7 @@ tlist = dendropy.TreeList()
 
 for tree in species:
     for i in range(0,options.number_trees/len(species)):
-        gene_tree = treesim.contained_coalescent(tree,taxon_map,default_pop_size=options.pop_size)
+        gene_tree = treesim.contained_coalescent(tree,taxon_map,edge_pop_size_attr=None,default_pop_size=options.pop_size)
         tlist.append(gene_tree)
         ##gene_tree.write_to_stream(genehandle,"newick",suppress_rooting=True)
 
