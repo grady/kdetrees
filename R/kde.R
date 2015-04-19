@@ -72,12 +72,12 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   }
   
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
-  ## if(distance == "geodesic"){
-  ##   bhv.c <- bhv.consts(trees,bw)
-  ##   km <- normkern(dm,bw,bhv.c)
-  ## } else {
+  if(distance == "geodesic"){
+    bhv.c <- bhv.consts(trees,bw)
+    km <- normkern(dm,bw,bhv.c)
+  } else {
   km <- normkern(dm,bw)
-  ## }
+}
   x <- estimate(km)
   c <- cutoff(x, k)
   i <- which( x < c )
@@ -134,13 +134,16 @@ kdetrees.complete <- function(infile,...,treeoutfile="outliers.tre",
 ##' @param i vector of columns to exclude from calculation
 ##' @return vector of density estimates for each tree
 ##' @author Grady Weyenberg
-estimate <- function(x,i=integer()){
+estimate <- function(x,i=integer(),log=TRUE){
   if(length(i) > 0)
-#    rowSums(x[,-i]) - (!(1:nrow(x) %in% i)) * diag(x)
-    log(colSums(x[-i,]) - (!(1:ncol(x) %in% i)) * diag(x))
+    x <- (colSums(x[-i,]) - (!(1:ncol(x) %in% i)) * diag(x))
   else
-#    rowSums(x) - diag(x)
-    log(colSums(x) - diag(x))
+    x <- colSums(x) - diag(x)
+
+  if(log)
+    log(x)
+  else
+    x
 }
 
 
