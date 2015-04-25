@@ -66,35 +66,72 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
                dissimilarity = as.matrix(dist.diss(trees,...)))
   dimnames(dm) <- list(names(trees),names(trees))
 
-  cutoff <- function(x, c = 1.5){
-    qs <- quantile(x, c(0.25,0.75))
-    unname(diff(qs) * -c + qs[1])
-  }
+
   
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
   if(distance == "geodesic"){
-    bhv.c <- bhv.consts(trees,bw)
-    km <- normkern(dm,bw,bhv.c)
+      bhv.c <- bhv.consts(trees,bw)
+      km <- normkern(dm,bw,bhv.c)
   } else {
-  km <- normkern(dm,bw)
-}
-  x <- estimate(km)
-  c <- cutoff(x, k)
-  i <- which( x < c )
-  if (greedy) {
-    while(TRUE){
-      i <- which( x < c )
-      if (length(i) < 1) break
-      x <- estimate(km,i)
-      c2 <- cutoff(x[-i], k)
-      ## if(is.na(c2)) browser()
-      if(c2 > c) c <- c2 else break
-    }
+      km <- normkern(dm,bw)
   }
-  structure(list(density=x, i=i, outliers=trees[i]), class="kdetrees",
-            call=match.call(), c=c)
+  i <- which.outliers(km,k,greedy)
+  x <- estimate(km)
+  
+  structure(list(density=x, i=i, outliers=trees[i],trees=trees,km=km),
+            class="kdetrees", call=match.call())
 }
 
+
+
+##' Find outlier indices based on Tukey's IQR method.
+##' @param km the kernel matrix
+##' @param k the tuning parameter
+##' @param greedy greedy search?
+##' @return indices of outliers
+##' @author Grady Weyenberg
+which.outliers <- function(km,k,greedy=TRUE){
+    x <- estimate(km)
+    c <- cutoff(x,k)
+    i <- which(x<c)
+    if(greedy){
+        while(TRUE){
+            i <- which(x<c)
+            if (length(i) < 1L) break
+            x <- estimate(km,i)
+            c2 <- cutoff(x[-i], k)
+            if (c2 > c) c <- c2 else break
+        }
+    }
+    i
+}
+
+
+##' Adjust Classification Tuning Parameter for fitted kdetrees Objects
+##'
+##' Takes a fitted kdetrees object and recalculates the outliers based on a new tuning parameter 'k'.
+##' @param x a fitted kdetrees object
+##' @param k new classifier tuning parameter
+##' @param greedy greedy outlier classification?
+##' @return a refitted kdetrees object
+##' @export
+##' @author Grady Weyenberg
+adjustClassifierParameter <- function(x,k,greedy=FALSE){
+    x$i <- which.outliers(x$km,k,greedy)
+    #x$density <- estimate(x$km)
+    x$outliers <- x$trees[x$i]
+    x
+}
+
+##' Find cutoff value based on IQR
+##' @param x score vector 
+##' @param k classifer tuning parameter
+##' @return cutoff value
+##' @author Grady Weyenberg
+cutoff <- function(x, k = 1.5){
+    qs <- quantile(x, c(0.25,0.75))
+    unname(diff(qs) * -k + qs[1])
+}
 
 ##' Performs a complete kdetrees analysis, starting with reading trees
 ##' from a newick file on disk, and writing result files to the

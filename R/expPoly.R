@@ -86,10 +86,11 @@ const.expPoly <- function(theta,m=0){
             y <- y * x
             res <- res + t * y
         }
-        exp(res)
+        x^m * exp(res)
     }
     G1 <- integrate(exp.poly,0,Inf,theta=theta)$value
-    Gpartial(theta,G1,m) ##This will only work with length(theta)==2
+    ##Gpartial(theta,G1,m) ##This will only work with length(theta)==2
+    G1
 }
 
 ##' Create a theta vector from a phylo object
