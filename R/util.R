@@ -128,8 +128,8 @@ write.kdetrees <- function(x,dir=".",trees=TRUE,...){
                    file=names(x$trees))
   if(trees) df$tree=write.tree(x$trees)
   write.table(df, "scores.txt", row.names=FALSE)
-  write.tree(x$outliers, "outliers.tre")
-  write.tree(x$trees[-x$i], "non-outlier.tre")
+  write.tree(x$outliers, "outliers.tre", tree.names=TRUE)
+  write.tree(x$trees[-x$i], "non-outlier.tre", tree.names=TRUE)
 }
 
 
