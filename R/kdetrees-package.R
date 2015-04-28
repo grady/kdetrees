@@ -4,9 +4,9 @@
 ##' 
 ##' @docType package
 ##' @name kdetrees-package
-##' @importFrom ape cophenetic.phylo unroot compute.brlen root write.tree read.tree multi2di
+##' @importFrom ape cophenetic.phylo unroot compute.brlen root write.tree read.tree multi2di Ntip
 ##' @importFrom distory dist.multiPhylo
-##' @importFrom hgm hgm.ncorthant
+##' @importFrom hgm hgm.ncorthant hgm.Rhgm
 ##' @import ggplot2
 NULL
 

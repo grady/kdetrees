@@ -16,6 +16,7 @@
 ##' 
 ##' @param x places to evaluate kernel
 ##' @param bw bandwidth values
+##' @param bhv.c vector of kernel constants 
 ##' @param delta shape parameter for kernel
 ##' @return an object of the same type as x with the kernel evaluations
 ##' @author Grady Weyenberg

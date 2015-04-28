@@ -169,6 +169,7 @@ kdetrees.complete <- function(infile,...,treeoutfile="outliers.tre",
 ##'
 ##' @param x matrix of kernel contributions
 ##' @param i vector of columns to exclude from calculation
+##' @param log log transform estimates?
 ##' @return vector of density estimates for each tree
 ##' @author Grady Weyenberg
 estimate <- function(x,i=integer(),log=TRUE){

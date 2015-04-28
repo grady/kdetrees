@@ -27,11 +27,10 @@ dG.expPoly <- function(th,G) {
 ##' 
 ##' Evaluate the higher order derivatives of an solved
 ##' Exponential-Polynomial system (Hayakawa and Takemura 2014).
-##' @title 
 ##' @param th Parameter vector 
 ##' @param G solved F(th) vector
 ##' @param m order of derivative 
-##' @return 
+##' @return value
 ##' @author Grady Weyenberg
 Gpartial <- function(th,G,m=0){
     ## m is derivitive to evaluate
@@ -107,13 +106,10 @@ make.theta <- function(t,h){
     -c(2.0*sqrt(d0t.sq), 1.0) / h^2
 }
 
-##' .. content for \description{} (no empty lines) ..
-##'
 ##' Lower orthant bound for tree t with bw h.
-##' @title 
 ##' @param t 
 ##' @param h 
-##' @return 
+##' @return lower bound volume
 ##' @author Grady Weyenberg
 bhv.orthant.lb <- function(t,h){
     p <- length(t$edge.length)
