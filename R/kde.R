@@ -43,8 +43,9 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   }
   
   if(inherits(trees,"multiPhylo")){
-    trees <- lapply(trees,multi2di)
-    class(trees) <- "multiPhylo"
+      trees <- lapply(trees,multi2di)
+      trees <- lapply(trees,zero.leaf.edges)
+      class(trees) <- "multiPhylo"
   }
   
   if (topo.only) {
@@ -52,17 +53,17 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
     class(trees) <- "multiPhylo"
   }
   
-  if (is.character(outgroup)) {
-    trees <- lapply(trees,root,outgroup,resolve.root=TRUE)
-    trees <- lapply(trees,"[<-","node.label", NULL)
-    class(trees) <- "multiPhylo"
-  }
+  ## if (is.character(outgroup)) {
+  ##   trees <- lapply(trees,root,outgroup,resolve.root=TRUE)
+  ##   trees <- lapply(trees,"[<-","node.label", NULL)
+  ##   class(trees) <- "multiPhylo"
+  ## }
 
   if(!inherits(trees,"multiPhylo"))
       stop("trees is not a multiPhylo object")
   
   dm <- switch(distance,
-               geodesic = as.matrix(dist.multiPhylo(trees,...)),
+               geodesic = as.matrix(dist.multiPhylo(trees,outgroup=outgroup,...)),
                dissimilarity = as.matrix(dist.diss(trees,...)))
   dimnames(dm) <- list(names(trees),names(trees))
 

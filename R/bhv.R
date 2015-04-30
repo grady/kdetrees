@@ -44,8 +44,8 @@ Northant <- function(n){
 ##' @return a vector of kernel integration constant lower bounds
 ##' @author Grady Weyenberg
 bhv.consts <- function(trees,bw){
-  ## x <- sapply(trees,internal.blens) ##dist.multiPhylo uses terminal edges
-  x <- sapply(trees,getElement,"edge.length")
+  x <- sapply(trees,internal.blens)
+  ## x <- sapply(trees,getElement,"edge.length")
   if(!is.matrix(x)) stop ("different number of tips in trees")
   n <- Northant(Ntip(trees[[1]])) #number of orthants
   d <- NROW(x) #dim of orthants
@@ -58,11 +58,15 @@ bhv.consts <- function(trees,bw){
     bm <- diag(d) * bw[i] * bw[i]
     c0 <- 1/sqrt((2 * pi)^d * det(bm)) #gaussian const at center
     ##browser()
-    ##p1 <- hgm.ncorthant(bm, x[,i]) / c0
-    p0 <- bhv.orthant.lb(trees[[i]], bw[i])
-    ##res[i] <- (p1 + p0*(n-1))
-    res[i] <- p0*n
-  }
+    if(min(x[,i]) > 6.0 * bw[i]){
+        res[i] <- c0
+    } else {
+        p1 <- hgm.ncorthant(bm, x[,i]) / c0
+        p0 <- bhv.orthant.lb(trees[[i]], bw[i])
+        res[i] <- (p1 + p0*(n-1))
+        ## res[i] <- p0*n
+    }
+}
   res
 }
 
@@ -89,3 +93,18 @@ bhv.consts <- function(trees,bw){
 ##     }
 ##     res
 ## }
+
+
+##' Lower orthant bound for tree t with bw h.
+##' @param t 
+##' @param h 
+##' @return lower bound volume
+##' @author Grady Weyenberg
+bhv.orthant.lb <- function(t,h){
+    e <- internal.blens(t)
+    p <- length(e)
+    d0t.sq <- crossprod(e)
+    theta <- -c(2.0*sqrt(d0t.sq), 1.0) / h^2
+    A <- const.expPoly(theta,p-1)
+    pi^(p/2) * exp(-d0t.sq/h^2) * A / 2^(p-1) / gamma(p/2)
+}

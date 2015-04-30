@@ -139,3 +139,11 @@ globalVariables(c("outlier","index"))
 
 
 
+zero.leaf.edges <- function(x){
+    x <- unroot(x)
+    n <- Ntip(x)
+    is.leaf <- function(z) {any(z %in% 1:n)}
+    i <- apply(x$edge,1, is.leaf)
+    x$edge.length[i] <- 0.0
+    x
+}
