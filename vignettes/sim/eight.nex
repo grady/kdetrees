@@ -1,0 +1,77 @@
+#NEXUS
+[written Sun May 03 20:06:42 EDT 2015 by Mesquite  version 3.03 (build 702) at minerva/192.168.1.174]
+
+BEGIN TAXA;
+	TITLE Taxa;
+	DIMENSIONS NTAX=8;
+	TAXLABELS
+		taxon_1 taxon_2 taxon_3 taxon_4 taxon_5 taxon_6 taxon_7 taxon_8 
+	;
+
+END;
+
+
+Begin MESQUITE;
+		MESQUITESCRIPTVERSION 2;
+		TITLE AUTO;
+		tell ProjectCoordinator;
+		timeSaved 1430698002506;
+		getEmployee #mesquite.minimal.ManageTaxa.ManageTaxa;
+		tell It;
+			setID 0 4460866289276947705;
+		endTell;
+		getWindow;
+		tell It;
+			suppress;
+			setResourcesState false false 262;
+			setPopoutState 400;
+			setExplanationSize 0;
+			setAnnotationSize 0;
+			setFontIncAnnot 0;
+			setFontIncExp 0;
+			setSize 700 500;
+			setLocation 8 22;
+			setFont SanSerif;
+			setFontSize 10;
+			getToolPalette;
+			tell It;
+			endTell;
+			desuppress;
+		endTell;
+		getEmployee  #mesquite.minimal.ManageTaxa.ManageTaxa;
+		tell It;
+			showTaxa #4460866289276947705 #mesquite.lists.TaxonList.TaxonList;
+			tell It;
+				setTaxa #4460866289276947705;
+				getWindow;
+				tell It;
+					newAssistant  #mesquite.lists.TaxonListCurrPartition.TaxonListCurrPartition;
+					setExplanationSize 30;
+					setAnnotationSize 20;
+					setFontIncAnnot 0;
+					setFontIncExp 0;
+					setSize 438 428;
+					setLocation 8 22;
+					setFont SanSerif;
+					setFontSize 10;
+					getToolPalette;
+					tell It;
+					endTell;
+					setActive;
+				endTell;
+				showWindow;
+				getEmployee #mesquite.lists.ColorTaxon.ColorTaxon;
+				tell It;
+					setColor Red;
+					removeColor off;
+				endTell;
+				getEmployee #mesquite.lists.TaxonListAnnotPanel.TaxonListAnnotPanel;
+				tell It;
+					togglePanel off;
+				endTell;
+			endTell;
+		endTell;
+		endTell;
+end;
+
+
