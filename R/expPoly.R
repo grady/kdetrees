@@ -106,15 +106,3 @@ make.theta <- function(t,h){
     -c(2.0*sqrt(d0t.sq), 1.0) / h^2
 }
 
-##' Lower orthant bound for tree t with bw h.
-##' @param t 
-##' @param h 
-##' @return lower bound volume
-##' @author Grady Weyenberg
-bhv.orthant.lb <- function(t,h){
-    p <- length(t$edge.length)
-    d0t.sq <- crossprod(t$edge.length)
-    theta <- -c(2.0*sqrt(d0t.sq), 1.0) / h^2
-    A <- const.expPoly(theta,p-1)
-    pi^(p/2) * exp(-d0t.sq/h^2) * A / 2^(p-1) / gamma(p/2)
-}

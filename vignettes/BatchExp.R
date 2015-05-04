@@ -26,14 +26,15 @@ makeDataset <- function(static,neff,ncoal=100,sp.file){
 
 ## algorithm
 kdesim <- function(dynamic,...){
-    kde.obj <- kdetrees(dynamic,...,bw=list(prop=0.19))
+    kde.obj <- kdetrees(dynamic,...,bw=list(prop=0.19), outgroup="taxon_1")
     i <- kde.obj$i
     nout <- attr(dynamic,"nout")
     hit <- sum(seq_len(nout) %in% i)
     c(hit=hit/nout,type1=(length(i)-hit)/(length(kde.obj$density)-nout))
 }
 
-out.trees <- unname(read.nexus("sim/species1k.nex"))
+## out.trees <- unname(read.nexus("sim/species1k.nex"))
+out.trees <- unname(read.nexus("sim/newsp1k.nex"))
 
 reg <- makeExperimentRegistry("rocExp", seed=42, packages=c("kdetrees","ape"))
 addRegistrySourceFiles(reg, "sim/my-pmcoa.R", src.now = TRUE)
@@ -48,7 +49,8 @@ addAlgorithm(reg, "pmcoa", pmcoa)
 
 ## 'X design' = X + parameter sets
 ## 'experiment' = problem designn + algorithm design + number of reps
-sp.files <- c("sim/species.nex","sim/species2.nex","sim/species5.nex")
+## sp.files <- c("sim/species.nex","sim/species2.nex","sim/species5.nex")
+sp.files <- c("sim/newsp.nex","sim/newsp2.nex","sim/newsp5.nex")
 neffs <- round(exp(seq(log(500),log(3000),len=4)))
 rocDesign <- makeDesign("coalescent", exhaustive=list(sp.file=sp.files, neff=neffs))
 

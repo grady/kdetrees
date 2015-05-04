@@ -138,7 +138,6 @@ write.kdetrees <- function(x,dir=".",trees=TRUE,...){
 globalVariables(c("outlier","index"))
 
 
-
 zero.leaf.edges <- function(x){
     x <- unroot(x)
     n <- Ntip(x)
