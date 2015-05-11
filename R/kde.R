@@ -71,9 +71,9 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
   if(distance == "geodesic"){
-      ## bhv.c <- bhv.consts(trees,bw)
-      ## km <- normkern(dm,bw,bhv.c)
-      km <- normkern(dm,bw)
+      bhv.c <- bhv.consts(trees,bw)
+      km <- normkern(dm,bw,bhv.c)
+      ##km <- normkern(dm,bw)
   } else {
       km <- normkern(dm,bw)
   }
