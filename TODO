@@ -1,2 +1,4 @@
-make it so kdeobj can have cutoff parameter modified w/o having to do
-whole calc again
+** An error was encountered in parsing near position N: Couldn't
+** figure out what to do after a second leaf entry.
+# distory::dist.multiPhylo throws this error if the trees have
+# node.labels. Remove them to fix.

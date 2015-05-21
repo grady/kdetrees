@@ -128,8 +128,13 @@ write.kdetrees <- function(x,dir=".",trees=TRUE,...){
                    file=names(x$trees))
   if(trees) df$tree=write.tree(x$trees)
   write.table(df, "scores.txt", row.names=FALSE)
-  write.tree(x$outliers, "outliers.tre", tree.names=TRUE)
-  write.tree(x$trees[-x$i], "non-outlier.tre", tree.names=TRUE)
+  if(length(x$outliers) > 0){
+      write.tree(x$outliers, "outliers.tre", tree.names=TRUE)
+      write.tree(x$trees[-x$i], "non-outlier.tre", tree.names=TRUE)
+  } else {
+      write.tree(x$trees, "non-outlier.tre", tree.names=TRUE)
+  }
+  invisible(x)
 }
 
 
@@ -145,4 +150,44 @@ zero.leaf.edges <- function(x){
     i <- apply(x$edge,1, is.leaf)
     x$edge.length[i] <- 0.0
     x
+}
+
+##' Read Newick trees from a set of files.
+##'
+##' Read a set of files containing individual trees and return a
+##' multiPhylo object with all trees in the files. The set of files to
+##' be read can either be passed explicitly as a character vector, or
+##' through a combination of a set of directories and a file extension
+##' which is used to construct a wildcard expression which will match
+##' files with the extension you specify..
+##'
+##' The behavior is determined by the extension parameter: If it is
+##' NULL, then the paths supplied are passed unaltered to the
+##' ape::read.tree function. If the parameter is not null, then the
+##' paths are altered by calling Sys.glob with wildcard expression
+##' "paths*extension".
+##' 
+##' @param paths If estension is NULL, a list of files containing
+##' trees. Otherwise, the prefix for a wildcard expression.
+##' @param extension If NULL, the paths are passed unaltered to
+##' read.tree. Otherwise, a suffix (file extension) for the wildcard
+##' expression.
+##' @param use.file.names Set the tree names using the file
+##' names. Will only work properly if each file contains a single
+##' tree.
+##' @return A multiPhylo object.
+##' @author Grady Weyenberg
+##' @export
+load.trees <- function(paths,extension=".tre",use.file.names=TRUE){
+    if(!is.null(extension))
+        paths <- Sys.glob(paste(paths,"*",extension,sep=""))
+    trees <- do.call(c,lapply(paths, read.tree))
+    if(use.file.names){
+        if(length(files) == length(trees))
+            names(trees) <- basename(files)
+        else
+            warning("Found ",length(file)," files and ",length(trees),
+                    "trees. Ignoring use.file.names.")
+    }
+    trees
 }

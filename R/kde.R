@@ -41,6 +41,8 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo"))){
     class(trees) <- "multiPhylo"
   }
+
+  t.0 <- trees
   
   if(inherits(trees,"multiPhylo")){
       trees <- lapply(trees,multi2di)
@@ -53,11 +55,6 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
     class(trees) <- "multiPhylo"
   }
   
-  ## if (is.character(outgroup)) {
-  ##   trees <- lapply(trees,root,outgroup,resolve.root=TRUE)
-  ##   trees <- lapply(trees,"[<-","node.label", NULL)
-  ##   class(trees) <- "multiPhylo"
-  ## }
 
   if(!inherits(trees,"multiPhylo"))
       stop("trees is not a multiPhylo object")
@@ -80,7 +77,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   i <- which.outliers(km,k,greedy)
   x <- estimate(km)
   
-  structure(list(density=x, i=i, outliers=trees[i],trees=trees,km=km),
+  structure(list(density=x, i=i, outliers=t.0[i],trees=t.0,km=km),
             class="kdetrees", call=match.call())
 }
 
