@@ -181,13 +181,26 @@ zero.leaf.edges <- function(x){
 load.trees <- function(paths,extension=".tre",use.file.names=TRUE){
     if(!is.null(extension))
         paths <- Sys.glob(paste(paths,"*",extension,sep=""))
-    trees <- do.call(c,lapply(paths, read.tree))
+    trees <- lapply(paths, read.tree)
+    trees <- lapply(trees, function(x){x$node.label <- NULL;x})
+    trees <- do.call(c,trees)
     if(use.file.names){
-        if(length(files) == length(trees))
-            names(trees) <- basename(files)
+        if(length(paths) == length(trees))
+            names(trees) <- basename(paths)
         else
-            warning("Found ",length(file)," files and ",length(trees),
+            warning("Found ",length(paths)," files and ",length(trees),
                     "trees. Ignoring use.file.names.")
     }
     trees
+}
+
+plot.multiPhylo <- function (x, layout = 1, ...) {
+    layout(matrix(1:layout, ceiling(sqrt(layout)), byrow = TRUE))
+    ## if (!devAskNewPage() && interactive()) {
+    ##     devAskNewPage(TRUE)
+    ##     on.exit(devAskNewPage(FALSE))
+    ## }
+    for (i in 1:length(x)){
+        plot(x[[i]], main=names(x)[i],...)
+    }
 }
