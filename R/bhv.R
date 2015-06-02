@@ -96,8 +96,8 @@ bhv.consts <- function(trees,bw){
 
 
 ##' Lower orthant bound for tree t with bw h.
-##' @param t 
-##' @param h 
+##' @param t tree
+##' @param h bandwidth
 ##' @return lower bound volume
 ##' @author Grady Weyenberg
 bhv.orthant.lb <- function(t,h){

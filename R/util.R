@@ -39,7 +39,7 @@ print.kdetrees <- function(x,...){
 ##' @method as.data.frame kdetrees
 ##' @export
 ##' @examples
-##' result <- kdetrees(apicomplexa)
+##' result <- kdetrees(apicomplexa, outgroup="Tt")
 ##' as.data.frame(result)
 as.data.frame.kdetrees <- function(x, row.names, optional, trees=NULL, ...){
     out <- data.frame(density = x$density,
@@ -58,7 +58,7 @@ as.data.frame.kdetrees <- function(x, row.names, optional, trees=NULL, ...){
 ##' @export
 ##' @method plot kdetrees
 ##' @examples
-##' result <- kdetrees(apicomplexa)
+##' result <- kdetrees(apicomplexa, outgroup="Tt")
 ##' plot(result)
 plot.kdetrees <- function(x,...){
   df <- with(x,data.frame(density=unname(density),
@@ -81,9 +81,6 @@ plot.kdetrees <- function(x,...){
 ##' @author Grady Weyenberg
 ##' @export
 ##' @method hist kdetrees
-##' @examples
-##' result <- kdetrees(apicomplexa)
-##' hist(result)
 hist.kdetrees <- function(x,...){
   df <- with(x,data.frame(density=unname(density),
                           index=seq_along(density),

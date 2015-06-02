@@ -17,10 +17,6 @@ a ggplot object
 \description{
 Create a histogram of tree density estimates
 }
-\examples{
-result <- kdetrees(apicomplexa)
-hist(result)
-}
 \author{
 Grady Weyenberg
 }

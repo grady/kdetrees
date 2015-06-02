@@ -9,6 +9,6 @@
 Apicomplexa gene trees sample data set.
 }
 \examples{
-kdetrees(apicomplexa)
+kdetrees(apicomplexa, outgroup="Tt")
 }
 

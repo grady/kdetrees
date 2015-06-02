@@ -28,7 +28,7 @@ value indicating if the tree was selected as an outlier, and
 optionally the newick string corresponding to the tree.
 }
 \examples{
-result <- kdetrees(apicomplexa)
+result <- kdetrees(apicomplexa, outgroup="Tt")
 as.data.frame(result)
 }
 \author{

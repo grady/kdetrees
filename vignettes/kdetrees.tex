@@ -7,6 +7,7 @@
 
 \title{kdetrees Manual}
 \author{Grady Weyenberg}
+\newcommand{\ape}{{\tt ape}}
 
 
 \usepackage{Sweave}
@@ -18,14 +19,14 @@
 
 KDETrees is a tool for finding discordant phylogenetic trees. It takes
 as input a collection of trees (as a {\tt ape::multiPhylo} object),
-and produces a \emph{score} for each tree. High scores mean the tree
-is relatively similar to other trees in the sample, while low scores
-indicate that the tree in question may be discordant with the
-others. Low scoring trees are identified as putative \emph{outliers},
-and their contribution to the score calculation is removed. The result
-object contains scores for each tree, and a list of the putative
-outlier trees. If you use the program in your research, please cite
-our paper:
+and produces a unnormalized density \emph{score} for each tree. High
+scores mean the tree is relatively similar to other trees in the
+sample, while low scores indicate that the tree in question may be
+discordant with the others. Low scoring trees are identified as
+putative \emph{outliers}, and their contribution to the score
+calculation is removed. The result object contains scores for each
+tree, and a list of the putative outlier trees. If you use the program
+in your research, please cite our paper:
 \begin{quote}
   \bibentry{kdetrees}.
 \end{quote}
@@ -33,31 +34,29 @@ our paper:
 
 \section{Using {\tt kdetrees}}
 \label{sec:use}
-The simplest method of using the software is the {\tt
-  kdetrees.complete} function. This is a convienence function which
-will do all the steps of the analysis at once: importing trees from
-file, performing the analysis, and producing output files. Basic use
-is to simply pass it the filename of a Newick file containing the
-trees to be analyzed. It will write several result files to the R
-working directory ({\tt getwd}).
+%% The simplest method of using the software is the {\tt
+%%   kdetrees.complete} function. This is a convienence function which
+%% will do all the steps of the analysis at once: importing trees from
+%% file, performing the analysis, and producing output files. Basic use
+%% is to simply pass it the filename of a Newick file containing the
+%% trees to be analyzed. It will write several result files to the R
+%% working directory ({\tt getwd}).
 
-The call below assumes there is a file containing newick formatted trees
-named {\tt trees.tre} in the current working directory. It will write
-out 4 files: {\tt outliers.tre} a newick file containing only the
-trees identified as outliers; {\tt results.csv} a csv files with the
-density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic
-images. The names of these output files can be customized with futher
-arguments to {\tt kdetrees.complete}.
+%% The call below assumes there is a file containing newick formatted trees
+%% named {\tt trees.tre} in the current working directory. It will write
+%% out 4 files: {\tt outliers.tre} a newick file containing only the
+%% trees identified as outliers; {\tt results.csv} a csv files with the
+%% density estimates; {\tt plot.png} and {\tt hist.png} are diagnostic
+%% images. The names of these output files can be customized with futher
+%% arguments to {\tt kdetrees.complete}.
 
-\begin{Schunk}
-\begin{Sinput}
-> kdetrees.complete("trees.tre")
-\end{Sinput}
-\end{Schunk}
+%% <<kdetrees.complete,eval=FALSE>>=
+%% kdetrees.complete("trees.tre")
+%% @ 
 
-The {\tt kdetrees.complete} function also accepts any of the
-parameters accepted by the {\tt kdetrees} function, as described in
-Sections \ref{sec:running-kdetrees} and \ref{sec:advanced-options}.
+%% The {\tt kdetrees.complete} function also accepts any of the
+%% parameters accepted by the {\tt kdetrees} function, as described in
+%% Sections \ref{sec:running-kdetrees} and \ref{sec:advanced-options}.
 
 
 \subsection{Importing Trees}
@@ -66,7 +65,7 @@ Sections \ref{sec:running-kdetrees} and \ref{sec:advanced-options}.
 Trees may be imported using any of the methods provided by the {\tt
   ape} package. (See {\tt ?read.tree} and {\tt ?read.nexus} for
 examples.) In the following examples, many functions are a part of the
-{\tt ape} package, and it is recommended that you import it. For
+\ape{} package, and it is recommended that you import it. For
 example, to load the example {\tt apicomplexa} dataset, I placed the
 Newick tree strings into a file named {\tt apicompexa.tre} file and
 ran the commands:
@@ -80,6 +79,9 @@ ran the commands:
   kdetrees package as example data, you do not need to import it. This
   is purely an example showing how to import your own trees.}
 
+kdetrees also provides the {\tt load.trees} function, which searches
+for files by directory and file extension.
+
 \subsection{Running kdetrees}
 \label{sec:running-kdetrees}
 
@@ -87,19 +89,20 @@ The simplest way to run {\tt kdetrees} is to call the function of the
 same name, with the list of trees as the first argument.
 \begin{Schunk}
 \begin{Sinput}
-> result <- kdetrees(apicomplexa)
+> result <- kdetrees(apicomplexa, outgroup="Tt")
 > result
 \end{Sinput}
 \begin{Soutput}
-Call: kdetrees(trees = apicomplexa)
+Call: kdetrees(trees = apicomplexa, outgroup = "Tt")
 Density estimates:
-    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-  0.9963  65.8700  82.6400  77.3000  94.4900 114.5000 
-Cutoff:  22.92261 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-38.740   5.108   6.107   5.472   6.616   7.199 
+Cutoff:  
 
 Outliers detected:
- [1] 488.tre 497.tre 515.tre 546.tre 547.tre 641.tre 660.tre
- [8] 662.tre 728.tre 747.tre 773.tre 780.tre
+ [1] 472.tre 478.tre 488.tre 505.tre 515.tre 553.tre 578.tre
+ [8] 585.tre 588.tre 630.tre 641.tre 645.tre 662.tre 725.tre
+[15] 745.tre 750.tre
 \end{Soutput}
 \end{Schunk}
 

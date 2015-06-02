@@ -29,7 +29,7 @@
 ##' @author Grady Weyenberg
 ##' @export
 ##' @examples
-##' kdeobj <- kdetrees(apicomplexa)
+##' kdeobj <- kdetrees(apicomplexa, outgroup="Tt")
 ##' print(kdeobj)
 ##' kdeobj$outliers
 ##'

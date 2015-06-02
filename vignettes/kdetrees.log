@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 MAY 2014 16:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  2 JUN 2015 16:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -190,25 +190,25 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./kdetrees.aux)
 \openout1 = `kdetrees.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 14.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    ... okay on input line 14.
 
 (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -272,12 +272,12 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 14.
+(Font)              <12> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 14.
+(Font)              <8> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 14.
-LaTeX Font Info:    Try loading font information for T1+aett on input line 20.
+(Font)              <6> on input line 15.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 21.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
@@ -287,49 +287,52 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 <kdetrees-plot.pdf, id=14, 433.62pt x 289.08pt>
 File: kdetrees-plot.pdf Graphic file (type pdf)
  <use kdetrees-plot.pdf>
-Package pdftex.def Info: kdetrees-plot.pdf used on input line 128.
+Package pdftex.def Info: kdetrees-plot.pdf used on input line 131.
 (pdftex.def)             Requested size: 276.00105pt x 184.00926pt.
 
 <kdetrees-hist.pdf, id=15, 433.62pt x 289.08pt>
 File: kdetrees-hist.pdf Graphic file (type pdf)
  <use kdetrees-hist.pdf>
-Package pdftex.def Info: kdetrees-hist.pdf used on input line 134.
+Package pdftex.def Info: kdetrees-hist.pdf used on input line 137.
 (pdftex.def)             Requested size: 276.00105pt x 184.00926pt.
 
-[2] [3 <./kdetrees-plot.pdf> <./kdetrees-hist.pdf>]
-<kdetrees-outlierplot.pdf, id=35, 433.62pt x 289.08pt>
+<kdetrees-outlierplot.pdf, id=16, 433.62pt x 289.08pt>
 File: kdetrees-outlierplot.pdf Graphic file (type pdf)
 
 <use kdetrees-outlierplot.pdf>
-Package pdftex.def Info: kdetrees-outlierplot.pdf used on input line 170.
+Package pdftex.def Info: kdetrees-outlierplot.pdf used on input line 173.
 (pdftex.def)             Requested size: 276.00105pt x 184.00926pt.
- [4 <./kdetrees-outlierplot.pdf>]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 238
-.
 
-(/Users/grady/Library/texmf/tex/latex/texmf/tex/latex/ts1aett.fd
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[2] [3 <./kdetrees-plot.pdf> <./kdetrees-hist.pdf>] [4 <./kdetrees-outlierplot.
+pdf>]
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 241
+.
+ (/Users/grady/Library/texmf/tex/latex/texmf/tex/latex/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 238
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 241
 .
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 238.
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 241.
 
-Overfull \hbox (3.39372pt too wide) in paragraph at lines 239--241
+Overfull \hbox (3.39372pt too wide) in paragraph at lines 242--244
 \T1/aer/m/n/10 The de-sired R com-mands can also be placed into a R script file
  (e.g. \T1/aett/m/n/10 myscript.R\T1/aer/m/n/10 ),
  []
 
 (./kdetrees.bbl) [5] (./kdetrees.aux) ) 
 Here is how much of TeX's memory you used:
- 3133 strings out of 493315
- 44514 string characters out of 6137904
- 98241 words of memory out of 5000000
- 6502 multiletter control sequences out of 15000+600000
+ 3134 strings out of 493315
+ 44517 string characters out of 6137904
+ 98249 words of memory out of 5000000
+ 6503 multiletter control sequences out of 15000+600000
  27204 words of font info for 61 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  37i,6n,23p,284b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -344,7 +347,7 @@ public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1
 public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/pu
 blic/cm-super/sftt1000.pfb>
-Output written on kdetrees.pdf (5 pages, 147778 bytes).
+Output written on kdetrees.pdf (5 pages, 147981 bytes).
 PDF statistics:
  78 PDF objects out of 1000 (max. 8388607)
  55 compressed objects within 1 object stream

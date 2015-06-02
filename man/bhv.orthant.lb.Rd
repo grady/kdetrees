@@ -7,9 +7,9 @@
 bhv.orthant.lb(t, h)
 }
 \arguments{
-\item{t}{}
+\item{t}{tree}
 
-\item{h}{}
+\item{h}{bandwidth}
 }
 \value{
 lower bound volume

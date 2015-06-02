@@ -1,7 +1,7 @@
 Package: kdetrees
 Type: Package
 Title: Nonparametric method for identifying discordant phylogenetic trees
-Version: 0.1.6
+Version: 2.0.0
 Date: 2015-04-27
 Author: Grady Weyenberg and Ruriko Yoshida
 Maintainer: Grady Weyenberg <grady.weyenberg@uky.edu>

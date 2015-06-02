@@ -18,7 +18,7 @@ a ggplot object
 Plot the unnormalized density estimates for each tree.
 }
 \examples{
-result <- kdetrees(apicomplexa)
+result <- kdetrees(apicomplexa, outgroup="Tt")
 plot(result)
 }
 \author{
