@@ -108,10 +108,10 @@ kdetrees(apicomplexa, k=1.25, distance="diss", topo.only=TRUE)
 
 \begin{figure}
   \centering
-<<plot,fig=TRUE,height=4>>=
+<<plot,fig=TRUE>>=
 plot(result)
 @ 
-<<hist,fig=TRUE,height=4>>=
+<<hist,fig=TRUE>>=
 hist(result)
 @   
   \caption{Diagnostic plots can be created with {\tt plot} and {\tt
