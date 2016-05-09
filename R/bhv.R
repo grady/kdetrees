@@ -1,15 +1,15 @@
 ##' Extract vector of internal branch lengths
 ##'
 ##' Take a phylo object and extract a vector containing the internal
-##' edge lengths, in no particular order.
+##' edge lengths, sorted by magnitude.
 ##' @param x a phylo object
 ##' @return a vector with the internal edge lengths
 ##' @author Grady Weyenberg
 internal.blens <- function(x){
     x <- unroot(x)
     n <- Ntip(x)
-    f <- function(z) {any(z %in% 1:n)}
-    i <- apply(x$edge,1,f)
+    has.leaf.node <- function(z) {any(z %in% seq_len(n))}
+    i <- apply(x$edge,1,has.leaf.node)
     sort(x$edge.length[!i])
 }
 
@@ -17,7 +17,6 @@ internal.blens <- function(x){
 ##'
 ##' Counts the number of topologies for rooted trees on n taxa. This
 ##' is the number of orthants in BHV tree space.
-##' (NOTE) Candidate for optimization?
 ##' 
 ##' @param n number of taxa, must be at least 3
 ##' @return integer number of topologies for a rooted phylogeny
@@ -25,12 +24,12 @@ internal.blens <- function(x){
 Northant <- function(n){
   n <- trunc(n)
   if (any(n<3)) stop("n must be greater than 2")
-  x <- 2L * n - 3L
-  res <- rep(1L,length(n))
-  while (any(x > 1L)) {
+  x <- 2 * n - 3
+  res <- rep(1,length(n))
+  while (any(x > 1)) {  # double factorial
     res <- res * x
-    x <- x - 2L
-    x[x<1L] <- 1L
+    x <- x - 2
+    x[x<1] <- 1
   }
   res
 }
@@ -43,30 +42,31 @@ Northant <- function(n){
 ##' @param bw bandwidth for each kernel
 ##' @return a vector of kernel integration constant lower bounds
 ##' @author Grady Weyenberg
-bhv.consts <- function(trees,bw){
+bhv.consts <- function(trees,bw, hgm=TRUE){
   x <- sapply(trees,internal.blens)
-  ## x <- sapply(trees,getElement,"edge.length")
-  if(!is.matrix(x)) stop ("different number of tips in trees")
-  n <- Northant(Ntip(trees[[1]])) #number of orthants
-  d <- NROW(x) #dim of orthants
-  N <- NCOL(x) #number of trees
-  res <- numeric(N) #result obj
+  if(!is.matrix(x)) stop("different number of tips in trees")
+  n <- Northant(Ntip(trees[[1]])) # number of orthants
+  d <- NROW(x) # dim of orthants
+  N <- NCOL(x) # number of trees
+  res <- numeric(N) # result obj
   
   if ( length(bw) == 1L ) bw <- rep(bw,N)
   
-  for (i in 1:N){
+  for (i in seq_len(N)){
     bm <- diag(d) * bw[i] * bw[i]
-    c0 <- 1/sqrt((2 * pi)^d * det(bm)) #gaussian const at center
-    ##browser()
+    c0 <- 1/sqrt((2 * pi)^d * det(bm)) # gaussian const at center
     if(min(x[,i]) > 6.0 * bw[i]){
         res[i] <- c0
     } else {
-        p1 <- hgm.ncorthant(bm, x[,i]) / c0
         p0 <- bhv.orthant.lb(trees[[i]], bw[i])
-        res[i] <- (p1 + p0*(n-1))
-        ## res[i] <- p0*n
+        if(hgm){
+            p1 <- hgm.ncorthant(bm, x[,i]) / c0
+            res[i] <- (p1 + p0*(n-1))
+        } else {
+            res[i] <- p0 * n
+        }
     }
-}
+  }
   res
 }
 
@@ -98,7 +98,7 @@ bhv.consts <- function(trees,bw){
 ##' Lower orthant bound for tree t with bw h.
 ##' @param t tree
 ##' @param h bandwidth
-##' @return lower bound volume
+##' @return lower bound volmue
 ##' @author Grady Weyenberg
 bhv.orthant.lb <- function(t,h){
     e <- internal.blens(t)

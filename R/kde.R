@@ -35,7 +35,7 @@
 ##'
 ##' kdetrees(apicomplexa, k=2.0, distance="dissimilarity",topo.only=FALSE)
 kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
-                     outgroup=NULL, topo.only=FALSE,bw=list(),greedy=FALSE,...) {
+                     outgroup=NULL, topo.only=FALSE,bw=list(),greedy=FALSE,hgm=TRUE,...) {
   distance <- match.arg(distance)
 
   if (!inherits(trees,"multiPhylo") && all(sapply(trees,inherits,"phylo"))){
@@ -68,7 +68,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
   if(distance == "geodesic"){
-      bhv.c <- bhv.consts(trees,bw)
+      bhv.c <- bhv.consts(trees,bw,hgm=hgm)
       km <- normkern(dm,bw,bhv.c)
       ##km <- normkern(dm,bw)
   } else {
@@ -77,8 +77,12 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   i <- which.outliers(km,k,greedy)
   x <- estimate(km)
   
-  structure(list(density=x, i=i, outliers=t.0[i],trees=t.0,km=km),
-            class="kdetrees", call=match.call())
+  out <- structure(list(density=x, i=i, outliers=t.0[i],trees=t.0,km=km),
+                   class="kdetrees", call=match.call())
+  if(distance == "geodesic"){
+      attr(out,'bhv.c') <- bhv.c
+  }
+  out
 }
 
 

@@ -77,10 +77,11 @@ hgm.expPoly <- function(theta,m=0){
 }
 
 const.expPoly <- function(theta,m=0){
-    exp.poly <- function(x,theta){
+    exp.poly <- function(x,theta){ ##Eqn (5) from paper in review.
         y <- 1.0
-        res <- x
-        res[TRUE] <- 0.0
+        ## res <- x
+        ## res[TRUE] <- 0.0
+        res <- numeric(length(x)) #zeros
         for(t in theta){
             y <- y * x
             res <- res + t * y
