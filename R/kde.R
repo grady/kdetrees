@@ -3,7 +3,7 @@
 ##' Analyze a set of phylogenetic trees and attempt to identify trees
 ##' which are significantly discordant with other trees in the sample
 ##' (outlier trees).
-##' 
+##'
 ##' If bw is a single number, it will be used as a single constant
 ##' bandwidth. It can also be a vector, in which case it will be used
 ##' as variable bandwidths for each tree, repectively. Finally, if it
@@ -43,29 +43,30 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   }
 
   t.0 <- trees
-  
+
   if(inherits(trees,"multiPhylo")){
-      trees <- lapply(trees,multi2di)
-      trees <- lapply(trees,zero.leaf.edges)
+      trees <- lapply(trees, multi2di)
+      trees <- lapply(trees, zero.leaf.edges)
+      for(i in seq_along(trees) trees[[i]]$node.labels <- NULL
       class(trees) <- "multiPhylo"
   }
-  
+
   if (topo.only) {
     trees <- lapply(trees,compute.brlen, method = 1)
     class(trees) <- "multiPhylo"
   }
-  
+
 
   if(!inherits(trees,"multiPhylo"))
       stop("trees is not a multiPhylo object")
-  
+
   dm <- switch(distance,
                geodesic = as.matrix(dist.multiPhylo(trees,outgroup=outgroup,...)),
                dissimilarity = as.matrix(dist.diss(trees,...)))
   dimnames(dm) <- list(names(trees),names(trees))
 
 
-  
+
   if(is.list(bw)) bw <- do.call(bw.nn,c(list(dm),bw))
   if(distance == "geodesic"){
       bhv.c <- bhv.consts(trees,bw,hgm=hgm)
@@ -76,7 +77,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   }
   i <- which.outliers(km,k,greedy)
   x <- estimate(km)
-  
+
   out <- structure(list(density=x, i=i, outliers=t.0[i],trees=t.0,km=km),
                    class="kdetrees", call=match.call())
   if(distance == "geodesic"){
@@ -127,7 +128,7 @@ adjustClassifierParameter <- function(x,k,greedy=FALSE){
 }
 
 ##' Find cutoff value based on IQR
-##' @param x score vector 
+##' @param x score vector
 ##' @param k classifer tuning parameter
 ##' @return cutoff value
 ##' @author Grady Weyenberg
@@ -157,14 +158,14 @@ kdetrees.complete <- function(infile,...,treeoutfile="outliers.tre",
   trees <- read.tree(infile)
   if (is.null(names(trees))) names(trees) <- paste("tree",seq_along(trees),sep="")
   if (!inherits(trees,"multiPhylo")) stop("Could not read tree file")
-  
+
   res <- kdetrees(trees,...)
   if (is.character(plotfile)) ggsave(plotfile,plot(res)) #scatterplot
   if (is.character(histfile)) ggsave(histfile,hist(res)) #histogram
   if (is.character(csvfile)) write.csv(as.data.frame(res),csvfile) #csv
   if (is.character(treeoutfile) && length(res$outliers) > 0)
     write.tree(res$outliers, treeoutfile, tree.names=TRUE,digits=5) #out-trees
-  
+
   res
 }
 
@@ -186,6 +187,3 @@ estimate <- function(x,i=integer(),log=TRUE){
   else
     x
 }
-
-
-
