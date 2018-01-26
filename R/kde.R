@@ -47,7 +47,7 @@ kdetrees <- function(trees,k=1.5,distance=c("geodesic","dissimilarity"),
   if(inherits(trees,"multiPhylo")){
       trees <- lapply(trees, multi2di)
       trees <- lapply(trees, zero.leaf.edges)
-      for(i in seq_along(trees) trees[[i]]$node.labels <- NULL
+      for(i in seq_along(trees)) trees[[i]]$node.labels <- NULL
       class(trees) <- "multiPhylo"
   }
 
